@@ -10,7 +10,6 @@ __pycache__/
 *.db
 *.db.bak-*
 backend/uploads/
-backend/templates/
 *.log
 *.tar
 *.zip

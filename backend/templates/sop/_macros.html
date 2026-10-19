@@ -1,0 +1,76 @@
+{# 单工位装配 SOP 区块宏（对齐参考件 SOP.xlsx 字段），被 station.html / batch.html 复用。#}
+{% macro station_block(style, plan, station, cut_pieces) %}
+  <div class="sop-page">
+    <h1>标准作业指导书 (SOP) <span class="sub">{{ style.name }} / {{ station.stationCode }}</span></h1>
+    <div class="sub">Standard Operating Procedure &nbsp;|&nbsp; 方案 Plan: {{ plan.name }}</div>
+
+    <table class="head-table">
+      <tr>
+        <th>产品名称 <span class="label-en">Product</span></th><td>{{ style.name or '-' }}</td>
+        <th>工序排号 <span class="label-en">Seq</span></th><td>{{ station.processSeq if station.processSeq is not none else station.stationCode }}</td>
+        <th>作业类型 <span class="label-en">Type</span></th><td>{{ station.workType or '-' }}</td>
+      </tr>
+      <tr>
+        <th>标准工时 <span class="label-en">Takt(s)</span></th><td>{{ station.stationTakt if station.stationTakt is not none else '-' }}</td>
+        <th>人员配置 <span class="label-en">Workers</span></th><td>{{ station.workerCount }}</td>
+        <th>版本号 <span class="label-en">Ver.</span></th><td>{{ station.version or 'A' }}</td>
+      </tr>
+    </table>
+
+    <div class="sec-title">物料清单 / BOM</div>
+    <table class="pieces">
+      <tr><th>序号 No.</th><th>材料编号 Code</th><th>材料名称 Name</th><th>材料规格 Spec</th><th>材质 Material</th><th>数量 Qty</th></tr>
+      {% if cut_pieces %}
+        {% for c in cut_pieces %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ c.pieceCode }}</td>
+            <td>{{ c.pieceName or '-' }}</td>
+            <td>{{ c.spec or '-' }}</td>
+            <td>{{ c.material or '-' }}</td>
+            <td>{{ c.quantity if c.quantity is not none else '-' }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="6" class="muted">未关联物料 No materials</td></tr>
+      {% endif %}
+    </table>
+
+    <div class="sec-title">操作说明 / Operation</div>
+    <table>
+      <tr><th>检查工序 <span class="label-en">Check</span></th><td>{{ (station.checkSteps or '-') | replace('\n', '<br/>') | safe }}</td></tr>
+      <tr><th>本工序作业 <span class="label-en">Main Steps</span></th><td>{{ (station.mainSteps or '（待补录 To be filled）') | replace('\n', '<br/>') | safe }}</td></tr>
+      <tr><th>注意事项 <span class="label-en">Notes</span></th><td>{{ (station.notes or '-') | replace('\n', '<br/>') | safe }}</td></tr>
+      <tr><th>自检 <span class="label-en">Self-check</span></th><td>{{ (station.selfCheck or '-') | replace('\n', '<br/>') | safe }}</td></tr>
+      <tr><th>技术要求 <span class="label-en">Tech Req.</span></th><td>{{ (station.techReq or '-') | replace('\n', '<br/>') | safe }}</td></tr>
+    </table>
+
+    <div class="sec-title">设备及工具 / Equipment</div>
+    <table class="pieces">
+      <tr><th>设备/工装名称 Name</th><th>型号 Model</th><th>设定条件 Condition</th></tr>
+      {% set equip = station.equipment or [] %}
+      {% if equip %}
+        {% for e in equip %}
+          <tr>
+            <td>{{ e.name or '-' }}</td>
+            <td>{{ e.model or '-' }}</td>
+            <td>{{ e.condition or '-' }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="3" class="muted">无 None</td></tr>
+      {% endif %}
+    </table>
+
+    <table>
+      <tr>
+        <th>核准 <span class="label-en">Approve</span></th><td>{{ station.approver or '-' }}</td>
+        <th>审核 <span class="label-en">Review</span></th><td>{{ station.reviewer or '-' }}</td>
+      </tr>
+      <tr>
+        <th>部门 <span class="label-en">Dept.</span></th><td>{{ station.department or '-' }}</td>
+        <th>负责人 <span class="label-en">Owner</span></th><td>{{ station.ownerName or '-' }}</td>
+      </tr>
+    </table>
+  </div>
+{% endmacro %}

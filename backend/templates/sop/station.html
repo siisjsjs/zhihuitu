@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<style>
+  @page { size: A4 landscape; margin: 1cm; }
+  body { font-family: "SimSun", "Microsoft YaHei", sans-serif; font-size: 10pt; color: #222; }
+  .sop-page { page-break-after: always; }
+  .sop-page:last-child { page-break-after: avoid; }
+  h1 { font-size: 15pt; margin: 0 0 4px 0; }
+  .sub { color: #666; font-size: 8pt; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  th, td { border: 1px solid #999; padding: 4px 6px; vertical-align: top; }
+  th { background: #f0f4ff; text-align: left; font-weight: bold; width: 18%; }
+  .head-table th { width: 12%; }
+  .label-en { color: #888; font-weight: normal; font-size: 8pt; }
+  .sec-title { background: #2b6cb0; color: #fff; padding: 4px 6px; font-weight: bold; margin-top: 8px; }
+  .proc-table th { background: #eef; width: auto; text-align: center; }
+  .proc-table td { text-align: center; }
+  .pieces td { text-align: center; }
+  .muted { color: #aaa; }
+</style>
+</head>
+<body>
+{% from "_macros.html" import station_block %}
+{{ station_block(style, plan, station, cut_pieces) }}
+</body>
+</html>
