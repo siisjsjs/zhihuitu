@@ -1,0 +1,50 @@
+{
+  "id": "stacked-bar",
+  "name": "面积堆叠柱状图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "用堆叠柱体展示多个系列在各分类下的构成和总量变化",
+  "tags": ["堆叠柱状图", "占比", "构成", "通用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 3,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：各季度不同用户等级订单量占比对比" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：季度" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：订单量（单）" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：用户等级" },
+    "x_labels": { "type": "string-list", "label": "横轴分类", "required": true, "placeholder": "如：Q12021, Q22021, Q32021" },
+    "series_names": { "type": "string-list", "label": "堆叠系列", "required": true, "placeholder": "如：普通用户订单量, 会员用户订单量, VIP 用户订单量" },
+    "values": { "type": "matrix", "label": "系列数据矩阵", "required": true, "rowsFrom": "x_labels", "colsFrom": "series_names" },
+    "show_total_labels": { "type": "number", "label": "显示总量标签", "required": false, "default": 1, "placeholder": "1 显示，0 不显示" }
+  },
+  "example": {
+    "description": "下面是一个分析'各季度不同用户等级订单量'的堆叠柱状图示例。横轴为季度，堆叠系列为普通用户、会员用户、VIP 用户和超级 VIP 用户订单量，并在柱体顶部显示季度总订单量。",
+    "data": {
+      "title": "各季度不同用户等级订单量占比对比",
+      "x_label": "季度",
+      "y_label": "订单量（单）",
+      "legend_title": "用户等级",
+      "x_labels": ["Q12021", "Q22021", "Q32021", "Q42021", "Q12022", "Q22022", "Q32022", "Q42022", "Q12023", "Q22023", "Q32023", "Q42023"],
+      "series_names": ["普通用户订单量", "会员用户订单量", "VIP 用户订单量", "超级 VIP 用户订单量"],
+      "values": [
+        [50000, 15000, 5000, 500],
+        [52000, 15800, 5300, 550],
+        [54000, 16500, 5600, 600],
+        [58000, 18000, 6200, 680],
+        [60000, 19000, 6500, 720],
+        [63000, 22000, 7500, 800],
+        [66000, 23500, 8000, 880],
+        [72000, 25000, 9000, 1000],
+        [74000, 26000, 9500, 1050],
+        [78000, 28000, 10000, 1150],
+        [82000, 30000, 10800, 1250],
+        [88000, 33000, 12000, 1400]
+      ],
+      "show_total_labels": 1
+    },
+    "aiPrompt": "帮我画一个各季度不同用户等级订单量占比对比的堆叠柱状图。季度为 2021Q1 到 2023Q4，转换显示为 Q12021、Q22021 等；普通用户订单量为 50000, 52000, 54000, 58000, 60000, 63000, 66000, 72000, 74000, 78000, 82000, 88000；会员用户订单量为 15000, 15800, 16500, 18000, 19000, 22000, 23500, 25000, 26000, 28000, 30000, 33000；VIP 用户订单量为 5000, 5300, 5600, 6200, 6500, 7500, 8000, 9000, 9500, 10000, 10800, 12000；超级 VIP 用户订单量为 500, 550, 600, 680, 720, 800, 880, 1000, 1050, 1150, 1250, 1400。"
+  }
+}

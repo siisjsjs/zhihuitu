@@ -1,0 +1,26 @@
+{
+  "id": "target-ix",
+  "name": "目标偏差图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "质量控制图",
+  "description": "目标偏差控制图，监控实测值与目标值的偏差",
+  "tags": ["目标偏差", "控制图", "质量控制"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 19,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：目标偏差图" },
+    "reading": { "type": "number-list", "label": "实测值", "required": true, "placeholder": "如：10.02, 9.98, 10.05, 10.01" },
+    "target": { "type": "number-list", "label": "目标值", "required": true, "placeholder": "如：10.0, 10.0, 10.0, 10.0" }
+  },
+  "example": {
+    "description": "下面是一个监控'多品种零件加工尺寸偏差'的目标偏差图示例。12 个零件的实测值与各自目标值，上图为偏差控制图，下图为移动极差图。",
+    "data": {
+      "reading": [25.03, 30.12, 25.01, 30.08, 24.97, 30.15, 25.02, 30.10, 24.98, 30.11, 25.04, 30.09],
+      "target": [25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10]
+    },
+    "aiPrompt": "帮我画一个多品种零件加工的目标偏差图。12 个零件，实测值为 25.03, 30.12, 25.01, 30.08, 24.97, 30.15, 25.02, 30.10, 24.98, 30.11, 25.04, 30.09，对应目标值为 25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10, 25.00, 30.10。"
+  }
+}

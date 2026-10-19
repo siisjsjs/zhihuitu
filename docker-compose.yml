@@ -1,0 +1,80 @@
+# 智绘图 Docker Compose
+#
+# 说明：下面数据库用户密码、root 密码、JWT SECRET_KEY 已填为随机生成值，可直接 docker compose 启动。
+# CORS_ORIGINS 按实际访问来源填写（前端域名或 IP:端口），多个用英文逗号分隔。
+#
+# 务必对齐：
+# - MYSQL_PASSWORD
+# - DATABASE_URL 里 zhihuitu:密码 这一段（与 MYSQL_PASSWORD 相同）
+# MYSQL_ROOT_PASSWORD 独立即可，不必与上面相同。
+#
+# 安全提醒：不要把含真实密码的 compose 提交到公开仓库。
+name: zhihuitu
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        USE_CN_MIRROR: ${USE_CN_MIRROR:-0}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        USE_CN_MIRROR: ${USE_CN_MIRROR:-0}
+    env_file:
+      - backend/.env
+    environment:
+      # 覆盖 backend/.env 里的同名字段：数据库连接以这里为准（密码只维护一份在 compose）。
+      DATABASE_URL: "mysql+aiomysql://zhihuitu:CHANGE_ME@mysql:3306/zhihuitu"
+      SECRET_KEY: CHANGE_ME
+      CHART_TEMPLATES_DIR: /app/chart-templates
+      ANNOUNCEMENT_UPLOAD_DIR: /app/backend/uploads/announcements
+      BACKEND_AUTO_CREATE_TABLES: "true"
+      BACKEND_SYNC_TEMPLATES_ON_STARTUP: "true"
+      # 浏览器访问地址：多个用英文逗号；本机用 Docker 时常访问 http://localhost，须一并写入。
+      CORS_ORIGINS: "http://localhost,http://127.0.0.1"
+      # 全新数据库无账号时可登录；已存在同名用户则跳过。上线建议删除或改强密码。
+      BOOTSTRAP_USER_USERNAME: "admin"
+      BOOTSTRAP_USER_PASSWORD: "CHANGE_ME"
+      BOOTSTRAP_USER_ROLE: "admin"
+      # 知识库门户地址，用于 /auth/sso 校验知识库 token（不带末尾斜杠）。
+      KGQA_BASE_URL: "https://kb.example.com"
+    volumes:
+      - ./chart-templates:/app/chart-templates:ro
+      - backend_uploads:/app/backend/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: zhihuitu
+      MYSQL_USER: zhihuitu
+      MYSQL_PASSWORD: CHANGE_ME
+      MYSQL_ROOT_PASSWORD: CHANGE_ME
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  backend_uploads:

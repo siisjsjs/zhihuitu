@@ -1,0 +1,96 @@
+{
+  "id": "man-machine",
+  "name": "人机作业分析图",
+  "engine": "vue-component",
+  "component": "ManMachineChart.vue",
+  "category": "方法研究",
+  "description": "分析人与机器在作业周期中的协作关系，识别空闲与等待",
+  "tags": ["人机分析", "方法研究", "IE"],
+  "exportFormats": ["xlsx", "png"],
+  "supportAI": true,
+  "sortOrder": 2,
+  "version": "1.0.0",
+  "dataSchema": {
+    "headerInfo": {
+      "workName": { "type": "string", "label": "作业名称" },
+      "workerName": { "type": "string", "label": "操作者" },
+      "machineName": { "type": "string", "label": "机器名称" },
+      "researcher": { "type": "string", "label": "研究者" },
+      "date": { "type": "date", "label": "日期" }
+    },
+    "activities": {
+      "type": "array",
+      "label": "作业活动",
+      "item": {
+        "worker": { "type": "string", "label": "人员动作" },
+        "machine": { "type": "string", "label": "机器动作" },
+        "time": { "type": "number", "label": "时间(秒)" },
+        "workerState": { "type": "enum", "label": "人员状态", "options": ["working", "idle"] },
+        "machineState": { "type": "enum", "label": "机器状态", "options": ["working", "idle"] }
+      }
+    }
+  },
+  "paramSchema": {
+    "headerInfo": {
+      "type": "object",
+      "label": "表头信息",
+      "fields": {
+        "taskName": { "type": "string", "label": "作业名称" },
+        "worker": { "type": "string", "label": "操作者姓名" },
+        "date": { "type": "string", "label": "日期(YYYY-MM-DD)" },
+        "analyst": { "type": "string", "label": "研究者" }
+      }
+    },
+    "machines": {
+      "type": "array<object>",
+      "label": "机器列（至少 1 台）",
+      "required": true,
+      "item": {
+        "id": { "type": "string", "label": "机器ID（如 m1、m2，必须与 rows[].cells 的键一一对应）", "required": true },
+        "name": { "type": "string", "label": "机器名称", "required": true }
+      }
+    },
+    "rows": {
+      "type": "array<object>",
+      "label": "作业行（每行代表一个时间段，按作业顺序排列）",
+      "required": true,
+      "item": {
+        "time": { "type": "number", "label": "该时间段的持续时间(秒)", "required": true },
+        "workerDesc": { "type": "string", "label": "操作人在该时间段的动作描述", "required": true },
+        "workerState": { "type": "enum", "label": "操作人状态", "options": ["work", "idle"], "required": true },
+        "cells": {
+          "type": "object",
+          "label": "各机器在该时间段的单元格，键为机器ID（如 m1）",
+          "required": true,
+          "item": {
+            "desc": { "type": "string", "label": "机器动作描述" },
+            "state": { "type": "enum", "label": "机器状态", "options": ["work", "idle"], "required": true }
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "description": "下面是一个钻床钻孔作业的人机作业分析示例。包含操作工A与立式钻床、攻丝机的协作过程，展示人员与机器的工作/空闲状态及利用率统计。",
+    "data": {
+      "headerInfo": {
+        "taskName": "钻床钻孔作业",
+        "worker": "操作工A",
+        "date": "2024-03-20",
+        "analyst": "张工"
+      },
+      "machines": [
+        { "id": "m1", "name": "立式钻床" },
+        { "id": "m2", "name": "攻丝机" }
+      ],
+      "rows": [
+        { "time": 15, "workerDesc": "取工件、装夹到钻床", "workerState": "work", "cells": { "m1": { "desc": "空闲", "state": "idle" }, "m2": { "desc": "自动攻丝", "state": "work" } } },
+        { "time": 2, "workerDesc": "开动钻床", "workerState": "work", "cells": { "m1": { "desc": "空闲", "state": "idle" }, "m2": { "desc": "自动攻丝", "state": "work" } } },
+        { "time": 30, "workerDesc": "空闲（等待钻孔）", "workerState": "idle", "cells": { "m1": { "desc": "钻孔加工", "state": "work" }, "m2": { "desc": "空闲", "state": "idle" } } },
+        { "time": 10, "workerDesc": "停机、卸工件", "workerState": "work", "cells": { "m1": { "desc": "空闲", "state": "idle" }, "m2": { "desc": "空闲", "state": "idle" } } },
+        { "time": 8, "workerDesc": "检验、放置", "workerState": "work", "cells": { "m1": { "desc": "空闲", "state": "idle" }, "m2": { "desc": "空闲", "state": "idle" } } }
+      ]
+    },
+    "aiPrompt": "帮我画一个钻床钻孔作业的人机作业分析图。操作工A同时操作立式钻床和攻丝机。流程是：取工件装夹到钻床15秒（攻丝机同时自动攻丝），开动钻床2秒，等待钻孔30秒（钻床工作），停机卸工件10秒，检验放置8秒。"
+  }
+}

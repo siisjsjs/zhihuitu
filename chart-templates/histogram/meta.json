@@ -1,0 +1,26 @@
+{
+  "id": "histogram",
+  "name": "直方图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "六西格玛",
+  "description": "连续数据分布可视化，观察集中趋势和离散程度",
+  "tags": ["直方图", "六西格玛", "质量"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 11,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：直方图" },
+    "values": { "type": "number-list", "label": "测量数据", "required": true, "placeholder": "如：12.3, 11.8, 12.1, 12.6, 11.9" },
+    "bins": { "type": "number", "label": "分组数", "required": false, "default": 6, "placeholder": "默认 6" }
+  },
+  "example": {
+    "description": "下面是一个分析'螺栓长度测量数据'分布的直方图示例。25 组测量值，分为 8 组，观察数据的集中趋势和离散程度。",
+    "data": {
+      "values": [12.3, 11.8, 12.1, 12.6, 11.9, 12.4, 12.0, 11.7, 12.2, 12.5, 12.1, 11.9, 12.3, 12.0, 11.8, 12.4, 12.2, 12.1, 11.9, 12.3, 12.0, 12.5, 11.8, 12.2, 12.1],
+      "bins": 8
+    },
+    "aiPrompt": "帮我画一个螺栓长度测量数据的直方图，分 8 组。测量数据为：12.3, 11.8, 12.1, 12.6, 11.9, 12.4, 12.0, 11.7, 12.2, 12.5, 12.1, 11.9, 12.3, 12.0, 11.8, 12.4, 12.2, 12.1, 11.9, 12.3, 12.0, 12.5, 11.8, 12.2, 12.1。"
+  }
+}

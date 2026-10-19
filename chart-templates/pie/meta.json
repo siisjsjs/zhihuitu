@@ -1,0 +1,31 @@
+{
+  "id": "pie",
+  "name": "饼图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "展示不同分类在总体中的占比结构",
+  "tags": ["饼图", "占比", "通用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 2,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：2023 年家庭支出结构占比分析" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：支出类别" },
+    "categories": { "type": "string-list", "label": "分类名称", "required": true, "placeholder": "如：食品, 住房, 交通, 娱乐, 其他" },
+    "values": { "type": "number-list", "label": "分类数值", "required": true, "placeholder": "如：31500, 54000, 13850, 11800, 26000" },
+    "highlight_index": { "type": "number", "label": "突出分类序号", "required": false, "default": 0, "placeholder": "0 表示不突出，2 表示突出第 2 类" }
+  },
+  "example": {
+    "description": "下面是一个分析'2023 年家庭支出结构'的饼图示例。先汇总全年各支出类别金额，再用饼图展示食品、住房、交通、娱乐和其他支出的占比，并突出显示住房类别。",
+    "data": {
+      "title": "2023 年家庭支出结构占比分析",
+      "legend_title": "支出类别",
+      "categories": ["食品", "住房", "交通", "娱乐", "其他"],
+      "values": [31500, 54000, 13850, 11800, 26000],
+      "highlight_index": 2
+    },
+    "aiPrompt": "帮我画一个 2023 年家庭支出结构占比分析饼图。全年各类别支出为：食品 31500、住房 54000、交通 13850、娱乐 11800、其他 26000。请突出显示住房类别，图例标题为支出类别。"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "doi-takt",
+  "name": "工序 DOI 节拍图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "生产管理",
+  "description": "对比各工序 DOI(单件作业时间)与节拍时间 TT,识别超节拍工序",
+  "tags": ["DOI", "节拍时间", "TT", "工序对比", "生产管理"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 28,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如:L 产线改善后各工序 DOI 指标" },
+    "process_names": { "type": "string-list", "label": "工序名称", "required": true, "placeholder": "如:接料派工, 研磨, 吹风缴拍" },
+    "doi_values": { "type": "number-list", "label": "DOI 数值(秒)", "required": true, "placeholder": "如:9.0, 6.5, 7.5" },
+    "takt_time": { "type": "number", "label": "节拍时间 TT(秒)", "required": true, "placeholder": "如:9.45" },
+    "doi_label": { "type": "string", "label": "DOI 系列名", "required": false, "placeholder": "默认:DOI(秒)" },
+    "takt_label": { "type": "string", "label": "TT 系列名", "required": false, "placeholder": "默认:TT(秒)" },
+    "y_label": { "type": "string", "label": "Y 轴标签", "required": false, "placeholder": "默认:时间(秒)" }
+  },
+  "example": {
+    "description": "L 产线改善后各工序 DOI 指标。共 24 道工序,节拍时间 TT=9.45 秒。",
+    "data": {
+      "title": "L产线改善后各工序DOI指标",
+      "process_names": ["接料派工","研磨","吹风缴拍","喷一次色漆","烘烤","修补吹风","缴拍","喷漆","烘烤","色漆 QC","QC 检查/扫描","水标派工","吹风缴拍","喷中途金油","烘烤","贴标","烘烤","撕标膜","油检","抽检","沾拍/缴拍","喷平光","UV 烘烤","QC 检查","过路移转"],
+      "doi_values": [9.0, 6.5, 7.5, 9.4, 8.3, 9.4, 9.0, 9.4, 8.3, 5.6, 7.5, 6.4, 6.0, 7.5, 5.0, 9.25, 6.25, 6.85, 8.1, 6.7, 8.0, 6.9, 6.35, 6.95, 9.0],
+      "takt_time": 9.45
+    },
+    "aiPrompt": "帮我做一个 L 产线 DOI 节拍图。节拍时间 TT=9.45 秒,各工序 DOI 依次为:接料派工 9.0、研磨 6.5、吹风缴拍 7.5、喷一次色漆 9.4、烘烤 8.3、修补吹风 9.4、缴拍 9.0、喷漆 9.4、烘烤 8.3、色漆QC 5.6、QC检查/扫描 7.5、水标派工 6.4、吹风缴拍 6.0、喷中途金油 7.5、烘烤 5.0、贴标 9.25、烘烤 6.25、撕标膜 6.85、油检 8.1、抽检 6.7、沾拍/缴拍 8.0、喷平光 6.9、UV烘烤 6.35、QC检查 6.95、过路移转 9.0。"
+  }
+}

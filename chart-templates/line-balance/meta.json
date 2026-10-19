@@ -1,0 +1,26 @@
+{
+  "id": "line-balance",
+  "name": "产线平衡分析",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "生产管理",
+  "description": "可视化各工位时间，识别瓶颈工位，评估线平衡率",
+  "tags": ["产线平衡", "瓶颈分析", "生产管理"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 27,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：手机装配线平衡分析" },
+    "station_names": { "type": "string-list", "label": "工位名称", "required": true, "placeholder": "如：工位1, 工位2, 工位3" },
+    "station_times": { "type": "number-list", "label": "工位时间", "required": true, "placeholder": "如：54.17, 77.50, 82.59" }
+  },
+  "example": {
+    "description": "某装配线有 5 个工位，工位名称和对应时间分别为：上料 54.17s、组装 77.50s、焊接 82.59s、检测 80.96s、包装 60.23s。分析瓶颈与线平衡率。",
+    "data": {
+      "station_names": ["上料", "组装", "焊接", "检测", "包装"],
+      "station_times": [54.17, 77.50, 82.59, 80.96, 60.23]
+    },
+    "aiPrompt": "帮我做一个产线平衡分析。装配线有 5 个工位：上料 54.17 秒、组装 77.50 秒、焊接 82.59 秒、检测 80.96 秒、包装 60.23 秒。"
+  }
+}

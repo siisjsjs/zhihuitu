@@ -1,0 +1,80 @@
+{
+  "id": "heatmap",
+  "name": "热力图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "以颜色深浅展示矩阵型数据（如各站点各时段指标）",
+  "tags": ["热力图", "矩阵", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 11,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：2023 年各气象站降水量热力图" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：月份" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：气象站" },
+    "cbar_label": { "type": "string", "label": "色条含义", "required": false, "placeholder": "如：降水量（mm）" },
+    "cmap": { "type": "string", "label": "配色", "required": false, "default": "YlGnBu", "placeholder": "如：YlGnBu、viridis" },
+    "show_annot": { "type": "number", "label": "显示格子数值", "required": false, "default": 1, "placeholder": "1 显示，0 不显示" },
+    "vmin": { "type": "number", "label": "色轴下限", "required": false, "placeholder": "留空则自动" },
+    "vmax": { "type": "number", "label": "色轴上限", "required": false, "placeholder": "留空则自动" },
+    "excel_import": {
+      "type": "excel",
+      "label": "导入 Excel",
+      "required": false,
+      "help": "Excel 第一行为表头：第 1 列为气象站名称，其后为「1月」…「12月」等各列降水量。可先下载顶部「Excel 示例」。",
+      "mappings": [
+        {
+          "mode": "matrix",
+          "target": "values",
+          "stationColumn": "气象站",
+          "monthColumns": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+          "rowsTarget": "row_labels",
+          "colsTarget": "column_labels"
+        }
+      ]
+    },
+    "row_labels": { "type": "hidden", "default": [] },
+    "column_labels": { "type": "hidden", "default": [] },
+    "values": {
+      "type": "matrix",
+      "label": "降水量矩阵",
+      "required": true,
+      "showMatrixTable": false,
+      "rowsFrom": "row_labels",
+      "colsFrom": "column_labels",
+      "uiNote": "由 Excel 导入后自动填入"
+    }
+  },
+  "excelExample": {
+    "fileName": "热力图_降水量_Excel示例.xlsx",
+    "sheetName": "降水量",
+    "columns": ["气象站", "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    "rows": [
+      ["站A", 45, 50, 65, 90, 120, 180, 220, 210, 160, 95, 60, 55],
+      ["站B", 30, 35, 50, 85, 110, 160, 190, 185, 140, 80, 45, 35],
+      ["站C", 55, 60, 75, 100, 135, 200, 240, 230, 175, 110, 75, 65],
+      ["站D", 25, 30, 45, 75, 100, 140, 170, 165, 125, 70, 40, 30],
+      ["站E", 60, 65, 80, 110, 145, 210, 250, 245, 190, 120, 85, 70],
+      ["站F", 40, 45, 60, 85, 115, 170, 200, 195, 150, 90, 55, 50],
+      ["站G", 35, 40, 55, 80, 105, 150, 180, 175, 135, 75, 50, 40],
+      ["站H", 50, 55, 70, 95, 130, 190, 230, 225, 180, 105, 70, 60]
+    ]
+  },
+  "example": {
+    "description": "各气象站 1～12 月降水量（毫米）矩阵热力图示例。可先下载 Excel 示例再上传导入。",
+    "data": {
+      "title": "2023 年各气象站降水量热力图",
+      "x_label": "月份",
+      "y_label": "气象站",
+      "cbar_label": "降水量（mm）",
+      "cmap": "YlGnBu",
+      "show_annot": 1,
+      "row_labels": [],
+      "column_labels": [],
+      "values": []
+    },
+    "aiPrompt": "画一张各气象站 1～12 月降水量热力图。气象站：站A 到 站H；每月降水量与系统中 Excel 示例相同；色条单位为 mm，配色 YlGnBu，格子内显示整数。"
+  }
+}

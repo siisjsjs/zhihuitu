@@ -1,0 +1,87 @@
+{
+  "id": "tech-roadmap",
+  "name": "技术路线图",
+  "engine": "drawio",
+  "category": "常用图表",
+  "description": "展示研究或项目的多阶段技术路线，包含各阶段关键节点、方法和产出的流程关系",
+  "tags": ["技术路线图", "路线图", "研究方法", "项目规划"],
+  "exportFormats": ["png", "svg", "xml"],
+  "supportAI": true,
+  "sortOrder": 1,
+  "version": "1.0.0",
+  "dataEntryComponent": "TechRoadmapForm.vue",
+  "defaultDiagramXml": "<mxfile host=\"embed.diagrams.net\"><diagram id=\"blank\" name=\"Page-1\"><mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>",
+  "example": {
+    "description": "一张完整的研究技术路线图，包含4个阶段：理论界定与指标构建、空间分异与关联分析、效应识别与机制分解、异质性分析与政策建议。",
+    "aiPrompt": "帮我生成一张技术路线图。研究主题是长三角城市数字化转型与新质生产力空间溢出效应。第一阶段是理论界定与指标构建，包括数字化转型指标体系、新质生产力指标体系、控制变量体系，使用VHSD-EM组合模型赋权，产出数字化转型指数和新质生产力指数。第二阶段是空间分异与关联分析，做空间自相关检验、空间计量模型前提检验、空间分布格局揭示。第三阶段是效应识别与机制分解，变量设定后用空间杜宾模型做效应分解和机制刻画。第四阶段是异质性分析与政策建议。",
+    "data": {
+      "title": "长三角城市数字化转型与新质生产力空间溢出效应研究技术路线图",
+      "stages": [
+        {
+          "name": "前期准备\n\n第一阶段\n理论界定与\n指标构建",
+          "color": "#6c8ebf",
+          "nodes": [
+            { "id": "s1_dig", "label": "数字化转型指标体系", "detail": "百人互联网宽带接入用户数\n移动电话普及率\n信息传输服务业从业人员占比\n电商销售额\n数字普惠金融指数", "style": "default" },
+            { "id": "s1_new", "label": "新质生产力指标体系", "detail": "R&D经费内部支出\n发明专利授权数\n单位GDP能耗\n全要素生产率\n高技术产业增加值占比", "style": "default" },
+            { "id": "s1_ctrl", "label": "控制变量体系", "detail": "财政支出占GDP比重\n外商直接投资\n高校在校生人数", "style": "default" },
+            { "id": "s1_model", "label": "VHSD-EM组合模型", "detail": "赋权与综合", "style": "model" },
+            { "id": "s1_idx1", "label": "数字化转型指数", "detail": "", "style": "result" },
+            { "id": "s1_idx2", "label": "新质生产力指数", "detail": "", "style": "result" }
+          ],
+          "connections": [
+            { "from": "s1_dig", "to": "s1_model" },
+            { "from": "s1_new", "to": "s1_model" },
+            { "from": "s1_ctrl", "to": "s1_new" },
+            { "from": "s1_model", "to": "s1_idx1" },
+            { "from": "s1_model", "to": "s1_idx2" }
+          ]
+        },
+        {
+          "name": "第二阶段\n空间分异与\n关联分析",
+          "color": "#d79b00",
+          "nodes": [
+            { "id": "s2_b", "label": "空间自相关检验", "detail": "计算全局Moran's I指数\n验证显著性与强度", "style": "default" },
+            { "id": "s2_c", "label": "空间计量模型设定前提检验", "detail": "", "style": "model" },
+            { "id": "s2_a", "label": "空间分布格局揭示", "detail": "城市经纬度信息 / 邻接矩阵\n最佳自然断裂法分级\n绘制空间分布热力图", "style": "default" }
+          ],
+          "connections": [
+            { "from": "s2_b", "to": "s2_c" },
+            { "from": "s2_b", "to": "s2_a" }
+          ]
+        }
+      ]
+    }
+  },
+  "paramSchema": {
+    "title": { "type": "string", "label": "路线图标题", "required": true },
+    "stages": {
+      "type": "object[]",
+      "label": "阶段列表（自上而下的泳道，左侧为阶段色带标签）",
+      "required": true,
+      "items": {
+        "name": { "type": "string", "label": "阶段名称，可用 \\n 换行显示在左侧标签内", "required": true },
+        "color": { "type": "string", "label": "阶段主题色 hex，如 #6c8ebf；缺省自动配色", "required": false },
+        "nodes": {
+          "type": "object[]",
+          "label": "阶段内节点列表（按顺序网格排布，每行最多 3 个）",
+          "required": true,
+          "items": {
+            "id": { "type": "string", "label": "节点唯一 id，供 connections 引用", "required": true },
+            "label": { "type": "string", "label": "节点标题（加粗显示）", "required": true },
+            "detail": { "type": "string", "label": "节点说明明细，多行用 \\n 分隔，无明细填空字符串", "required": false },
+            "style": { "type": "string", "label": "节点样式：default（白底）、model（蓝底，方法/模型）、result（绿底圆角，产出/结果）", "required": false }
+          }
+        },
+        "connections": {
+          "type": "object[]",
+          "label": "同阶段内节点连接箭头列表（from/to 为节点 id）",
+          "required": false,
+          "items": {
+            "from": { "type": "string", "label": "起点节点 id", "required": true },
+            "to": { "type": "string", "label": "终点节点 id", "required": true }
+          }
+        }
+      }
+    }
+  }
+}

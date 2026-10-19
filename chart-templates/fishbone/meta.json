@@ -1,0 +1,36 @@
+{
+  "id": "fishbone",
+  "name": "鱼骨图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "六西格玛",
+  "description": "因果分析（石川图），从人机料法环测六方面分析问题根因",
+  "tags": ["鱼骨图", "因果分析", "六西格玛"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 14,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：鱼骨图" },
+    "problem": { "type": "string", "label": "核心问题", "required": true, "placeholder": "如：产品缺陷率高" },
+    "人员": { "type": "string-list", "label": "人员原因", "required": false, "placeholder": "如：培训不足, 操作失误" },
+    "机器": { "type": "string-list", "label": "机器原因", "required": false, "placeholder": "如：设备老化, 维护不当" },
+    "材料": { "type": "string-list", "label": "材料原因", "required": false },
+    "方法": { "type": "string-list", "label": "方法原因", "required": false },
+    "环境": { "type": "string-list", "label": "环境原因", "required": false },
+    "测量": { "type": "string-list", "label": "测量原因", "required": false }
+  },
+  "example": {
+    "description": "下面是一个分析'产品合格率低'的鱼骨图示例。从人、机、料、法、环、测六个方面列出可能的根因。",
+    "data": {
+      "problem": "产品合格率低",
+      "人员": ["新员工培训不足", "操作经验不足", "疲劳作业"],
+      "机器": ["设备老化", "精度下降", "维护周期过长"],
+      "材料": ["供应商批次差异", "原料含水率波动"],
+      "方法": ["操作标准缺失", "工艺流程不合理"],
+      "环境": ["车间温湿度波动", "粉尘较多"],
+      "测量": ["量具未定期校准", "抽检比例偏低"]
+    },
+    "aiPrompt": "帮我分析'产品合格率低'这个问题的根因。从人、机、料、法、环、测六个方面列出可能原因。"
+  }
+}

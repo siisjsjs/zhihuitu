@@ -1,0 +1,42 @@
+{
+  "id": "grouped-bar",
+  "name": "分组柱状图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "并排比较多个系列在不同分类下的数值差异",
+  "tags": ["分组柱状图", "对比", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 8,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：各地区季度销量对比" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：地区" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：销量（件）" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：季度" },
+    "x_labels": { "type": "string-list", "label": "横轴分类", "required": true, "placeholder": "如：华东, 华南, 华北" },
+    "series_names": { "type": "string-list", "label": "分组系列", "required": true, "placeholder": "如：Q1, Q2, Q3" },
+    "values": { "type": "matrix", "label": "系列数据矩阵", "required": true, "rowsFrom": "x_labels", "colsFrom": "series_names" },
+    "show_value_labels": { "type": "number", "label": "显示数值标签", "required": false, "default": 0, "placeholder": "1 显示，0 不显示" }
+  },
+  "example": {
+    "description": "下面是一个分析'各地区季度销量'的分组柱状图示例。",
+    "data": {
+      "title": "各地区季度销量对比",
+      "x_label": "地区",
+      "y_label": "销量（件）",
+      "legend_title": "季度",
+      "x_labels": ["华东", "华南", "华北", "西南"],
+      "series_names": ["Q1", "Q2", "Q3"],
+      "values": [
+        [3200, 3600, 3900],
+        [2800, 3100, 3400],
+        [2400, 2700, 2950],
+        [2100, 2500, 2800]
+      ],
+      "show_value_labels": 0
+    },
+    "aiPrompt": "帮我画一个各地区季度销量对比的分组柱状图。地区为华东、华南、华北、西南；Q1 销量分别为 3200, 2800, 2400, 2100；Q2 为 3600, 3100, 2700, 2500；Q3 为 3900, 3400, 2950, 2800。"
+  }
+}

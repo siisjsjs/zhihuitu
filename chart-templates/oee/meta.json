@@ -1,0 +1,27 @@
+{
+  "id": "oee",
+  "name": "设备综合效率",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "生产管理",
+  "description": "设备综合效率 OEE 分析，可用率×性能率×质量率",
+  "tags": ["OEE", "设备效率", "生产管理"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 25,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：CNC 设备综合效率分析" },
+    "A": { "type": "number", "label": "总可用时间 A（分钟）", "required": true, "placeholder": "如：480" },
+    "B": { "type": "number", "label": "运行时间 B（分钟）", "required": true, "placeholder": "如：400" },
+    "C": { "type": "number", "label": "生产能力 C（件）", "required": true, "placeholder": "如：100" },
+    "D": { "type": "number", "label": "实际产量 D（件）", "required": true, "placeholder": "如：80" },
+    "E": { "type": "number", "label": "产品产出 E（件）", "required": true, "placeholder": "如：80" },
+    "F": { "type": "number", "label": "实际良品数 F（件）", "required": true, "placeholder": "如：72" }
+  },
+  "example": {
+    "description": "某设备总可用时间 480 分钟，实际运行 400 分钟。理论生产能力 100 件，实际产量 80 件。产品产出 80 件，其中良品 72 件。",
+    "data": { "A": 480, "B": 400, "C": 100, "D": 80, "E": 80, "F": 72 },
+    "aiPrompt": "帮我做一个 OEE 分析。设备总可用时间 480 分钟，实际运行 400 分钟。理论产能 100 件，实际产量 80 件，良品数 72 件。"
+  }
+}

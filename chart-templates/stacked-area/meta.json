@@ -1,0 +1,47 @@
+{
+  "id": "stacked-area",
+  "name": "堆积面积图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "展示多个系列随时间变化的构成占比或累计规模趋势",
+  "tags": ["堆积面积图", "占比", "趋势", "通用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 5,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：各产品线销售额占比随时间变化趋势" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：年份" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：销售额占比(%)" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：产品线" },
+    "source": { "type": "string", "label": "数据来源", "required": false, "placeholder": "如：数据来源：企业销售统计(2018-2022)" },
+    "x_values": { "type": "number-list", "label": "时间点", "required": true, "placeholder": "如：2018, 2019, 2020" },
+    "series_names": { "type": "string-list", "label": "堆积系列", "required": true, "placeholder": "如：A, B, C, D" },
+    "values": { "type": "matrix", "label": "系列数据矩阵", "required": true, "rowsFrom": "x_values", "colsFrom": "series_names" },
+    "normalize_percent": { "type": "number", "label": "转为百分比", "required": false, "default": 1, "placeholder": "1 显示占比，0 显示原始值" },
+    "show_total_labels": { "type": "number", "label": "显示总计标签", "required": false, "default": 1, "placeholder": "1 显示，0 不显示" }
+  },
+  "example": {
+    "description": "下面是一个分析'各产品线销售额占比随时间变化'的堆积面积图示例。原始数据按年份和产品线汇总后，转换为各产品线占当年总销售额的百分比。",
+    "data": {
+      "title": "各产品线销售额占比随时间变化趋势",
+      "x_label": "年份",
+      "y_label": "销售额占比(%)",
+      "legend_title": "产品线",
+      "source": "数据来源：企业销售统计(2018-2022)",
+      "x_values": [2018, 2019, 2020, 2021, 2022],
+      "series_names": ["A", "B", "C", "D"],
+      "values": [
+        [8500, 3200, 4800, 650],
+        [8900, 3800, 4500, 980],
+        [9200, 4500, 4100, 1500],
+        [9500, 5200, 3800, 2200],
+        [9800, 6000, 3500, 3000]
+      ],
+      "normalize_percent": 1,
+      "show_total_labels": 1
+    },
+    "aiPrompt": "帮我画一个各产品线销售额占比随时间变化趋势的堆积面积图。年份为 2018, 2019, 2020, 2021, 2022；产品线为 A, B, C, D；销售额（万元）分别为：2018 年 A 8500、B 3200、C 4800、D 650；2019 年 A 8900、B 3800、C 4500、D 980；2020 年 A 9200、B 4500、C 4100、D 1500；2021 年 A 9500、B 5200、C 3800、D 2200；2022 年 A 9800、B 6000、C 3500、D 3000。请转为百分比占比，并显示每年总销售额。"
+  }
+}

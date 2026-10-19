@@ -1,0 +1,24 @@
+{
+  "id": "eoq",
+  "name": "经济订货量模型",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "库存管理",
+  "description": "经济订货量 EOQ 模型，平衡订货与持有成本",
+  "tags": ["EOQ", "库存管理", "订货量"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 20,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：EOQ 库存水平图" },
+    "S": { "type": "number", "label": "订货成本 S", "required": true, "placeholder": "如：10" },
+    "D": { "type": "number", "label": "年需求量 D", "required": true, "placeholder": "如：2400" },
+    "H": { "type": "number", "label": "单位持有成本 H", "required": true, "placeholder": "如：0.3" }
+  },
+  "example": {
+    "description": "某仓库年需求量 2400 件，每次订货成本 10 元，单位年持有成本 0.3 元。求最优订货量及库存变化趋势。",
+    "data": { "S": 10, "D": 2400, "H": 0.3 },
+    "aiPrompt": "帮我做一个 EOQ 经济订货量分析。年需求量 2400 件，每次订货成本 10 元，单位年持有成本 0.3 元。"
+  }
+}

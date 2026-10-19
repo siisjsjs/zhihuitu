@@ -1,0 +1,107 @@
+{
+  "id": "two-hand",
+  "name": "双手作业分析图",
+  "engine": "vue-component",
+  "component": "TwoHandChart.vue",
+  "styles": [
+    {
+      "id": "modern",
+      "name": "新版 · 圆点连线",
+      "description": "4 符号圆点连线风格，简洁直观",
+      "component": "TwoHandChart.vue",
+      "promptFile": "prompt.md",
+      "previewImage": "/template-previews/two-hand-modern.png"
+    },
+    {
+      "id": "classic",
+      "name": "经典 · 符号表格",
+      "description": "5 符号图标表格风格，含时间列和布局图",
+      "component": "TwoHandChartClassic.vue",
+      "promptFile": "prompt-classic.md",
+      "previewImage": "/template-previews/two-hand-classic.png"
+    }
+  ],
+  "category": "方法研究",
+  "description": "记录和分析左右手在作业中的动作配合，优化双手协调",
+  "tags": ["双手分析", "方法研究", "IE"],
+  "exportFormats": ["xlsx", "png"],
+  "supportAI": true,
+  "sortOrder": 5,
+  "version": "2.0.0",
+  "dataSchema": {
+    "headerInfo": {
+      "stationName": { "type": "string", "label": "工站名称" },
+      "improvement": { "type": "enum", "label": "改善现场", "options": ["现行", "改善"] },
+      "startState": { "type": "string", "label": "开始状态" },
+      "endState": { "type": "string", "label": "结束状态" },
+      "researcher": { "type": "string", "label": "研究者" },
+      "date": { "type": "date", "label": "日期" },
+      "method": { "type": "string", "label": "作业方式" }
+    },
+    "steps": {
+      "type": "array",
+      "label": "作业步骤",
+      "item": {
+        "leftDesc": { "type": "string", "label": "左手描述" },
+        "leftSymbol": { "type": "enum", "label": "左手符号", "options": ["operation", "transport", "delay", "hold"] },
+        "rightSymbol": { "type": "enum", "label": "右手符号", "options": ["operation", "transport", "delay", "hold"] },
+        "rightDesc": { "type": "string", "label": "右手描述" }
+      }
+    }
+  },
+  "paramSchema": {
+    "headerInfo": {
+      "type": "object",
+      "label": "表头信息",
+      "fields": {
+        "stationName": { "type": "string", "label": "工站名称" },
+        "improvement": { "type": "enum", "label": "改善现场", "options": ["现行", "改善"] },
+        "startState": { "type": "string", "label": "开始状态（作业前的状态描述）" },
+        "endState": { "type": "string", "label": "结束状态（作业完成后的状态描述）" },
+        "researcher": { "type": "string", "label": "研究者" },
+        "date": { "type": "string", "label": "日期(YYYY-MM-DD)" },
+        "method": { "type": "string", "label": "作业方式" }
+      }
+    },
+    "steps": {
+      "type": "array<object>",
+      "label": "作业步骤（按作业顺序排列，每行为左右手同时进行的一个步骤）",
+      "required": true,
+      "item": {
+        "leftDesc": { "type": "string", "label": "左手动作描述", "required": true },
+        "leftSymbol": { "type": "enum", "label": "左手符号：operation=○操作，transport=→搬运，delay=D等待，hold=▽持握", "options": ["operation", "transport", "delay", "hold"], "required": true },
+        "rightSymbol": { "type": "enum", "label": "右手符号：operation=○操作，transport=→搬运，delay=D等待，hold=▽持握", "options": ["operation", "transport", "delay", "hold"], "required": true },
+        "rightDesc": { "type": "string", "label": "右手动作描述", "required": true }
+      }
+    }
+  },
+  "example": {
+    "description": "变速箱装配工站的双手作业分析示例，展示 12 个步骤的左右手配合。",
+    "data": {
+      "headerInfo": {
+        "stationName": "变速箱装配工站",
+        "improvement": "改善",
+        "startState": "零件在料架上",
+        "endState": "变速箱装配完成",
+        "researcher": "李工",
+        "date": "2024-06-15",
+        "method": "手工装配"
+      },
+      "steps": [
+        { "leftDesc": "等待", "leftSymbol": "delay", "rightSymbol": "transport", "rightDesc": "取变速箱组" },
+        { "leftDesc": "协助固定变速箱组", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "固定变速箱组" },
+        { "leftDesc": "等待", "leftSymbol": "delay", "rightSymbol": "transport", "rightDesc": "取最终轴齿轮" },
+        { "leftDesc": "协助安装最终轴齿轮", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "安装最终轴齿轮" },
+        { "leftDesc": "取垫片", "leftSymbol": "transport", "rightSymbol": "transport", "rightDesc": "取齿轮油加注设备" },
+        { "leftDesc": "协助安装垫片", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "加注齿轮油并安装垫片" },
+        { "leftDesc": "等待", "leftSymbol": "delay", "rightSymbol": "transport", "rightDesc": "取变速箱垫片" },
+        { "leftDesc": "协助安装变速箱垫片", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "安装变速箱垫片" },
+        { "leftDesc": "取缘面螺栓 1 号并定位", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "锁付缘面螺栓 1 号" },
+        { "leftDesc": "取缘面螺栓 2 号并定位", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "锁付缘面螺栓 2 号" },
+        { "leftDesc": "取缘面螺栓 3 号并定位", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "锁付缘面螺栓 3 号" },
+        { "leftDesc": "取缘面螺栓 4 号并定位", "leftSymbol": "operation", "rightSymbol": "operation", "rightDesc": "锁付缘面螺栓 4 号" }
+      ]
+    },
+    "aiPrompt": "帮我画一个变速箱装配工站的双手作业分析图。包含取变速箱组、固定、取齿轮、安装齿轮、取垫片、安装垫片、取变速箱垫片、安装变速箱垫片、锁付4颗缘面螺栓等12个步骤。"
+  }
+}

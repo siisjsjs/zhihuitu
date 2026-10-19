@@ -1,0 +1,144 @@
+{
+  "id": "joint-operation",
+  "name": "联合作业分析图",
+  "engine": "vue-component",
+  "component": "JointOperation.vue",
+  "category": "方法研究",
+  "description": "分析多人或人机组合的联合作业过程，优化协作效率",
+  "tags": ["联合作业", "方法研究", "IE"],
+  "exportFormats": ["xlsx", "png"],
+  "supportAI": true,
+  "sortOrder": 4,
+  "version": "1.0.0",
+  "dataSchema": {
+    "headerInfo": {
+      "taskName": { "type": "string", "label": "作业名称" },
+      "operator": { "type": "string", "label": "操作者" },
+      "date": { "type": "date", "label": "日期" },
+      "location": { "type": "string", "label": "地点" },
+      "remarks": { "type": "string", "label": "备注" }
+    },
+    "columns": {
+      "type": "array",
+      "label": "操作者列",
+      "item": {
+        "id": { "type": "string", "label": "列ID" },
+        "name": { "type": "string", "label": "操作者名称" }
+      }
+    },
+    "timeRows": {
+      "type": "array",
+      "label": "时间行",
+      "item": {
+        "time": { "type": "number", "label": "时间点(秒)" },
+        "cells": { "type": "object", "label": "各列单元格" }
+      }
+    }
+  },
+  "paramSchema": {
+    "headerInfo": {
+      "type": "object",
+      "label": "表头信息",
+      "fields": {
+        "taskName": { "type": "string", "label": "作业名称" },
+        "operator": { "type": "string", "label": "操作者/团队名称" },
+        "date": { "type": "string", "label": "日期(YYYY-MM-DD)" },
+        "location": { "type": "string", "label": "作业地点" },
+        "remarks": { "type": "string", "label": "备注" }
+      }
+    },
+    "columns": {
+      "type": "array<object>",
+      "label": "作业者/机器列（至少 1 列）",
+      "required": true,
+      "item": {
+        "id": { "type": "string", "label": "列ID（如 col1、col2，必须与 timeRows[].cells 的键一一对应）", "required": true },
+        "name": { "type": "string", "label": "作业者或机器名称", "required": true }
+      }
+    },
+    "timeRows": {
+      "type": "array<object>",
+      "label": "时间行（按时间递增排列，每行代表一个时间段的结束时间点）",
+      "required": true,
+      "item": {
+        "time": { "type": "number", "label": "累计时间点(秒)，如 0.5、1.0、1.5", "required": true },
+        "cells": {
+          "type": "object",
+          "label": "各列在该时间段的单元格，键为列ID（如 col1）",
+          "required": true,
+          "item": {
+            "desc": { "type": "string", "label": "动作描述", "required": true },
+            "duration": { "type": "number", "label": "该段持续时间(秒)", "required": true },
+            "isWork": { "type": "boolean", "label": "是否为工作状态（true=工作，false=空闲/等待）", "required": true }
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "description": "下面是一个F1汽车轮胎更换的联合作业分析示例。包含前后千斤顶操作员、轮胎枪手、搬运工等多人协作过程，展示各操作者的工作/空闲状态。",
+    "data": {
+      "headerInfo": {
+        "taskName": "F1汽车轮胎更换",
+        "operator": "换胎团队",
+        "date": "2024-03-20",
+        "location": "维修站",
+        "remarks": "F1赛事进站换胎流程分析"
+      },
+      "columns": [
+        { "id": "col1", "name": "前千斤顶操作员" },
+        { "id": "col2", "name": "后千斤顶操作员" },
+        { "id": "col3", "name": "轮胎枪手" },
+        { "id": "col4", "name": "轮胎搬运工" }
+      ],
+      "timeRows": [
+        {
+          "time": 0.5,
+          "cells": {
+            "col1": { "desc": "顶起前部", "duration": 0.5, "isWork": true },
+            "col2": { "desc": "顶起后部", "duration": 0.5, "isWork": true },
+            "col3": { "desc": "等待", "duration": 0.5, "isWork": false },
+            "col4": { "desc": "等待", "duration": 0.5, "isWork": false }
+          }
+        },
+        {
+          "time": 1.0,
+          "cells": {
+            "col1": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col2": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col3": { "desc": "拧松旧轮胎螺母", "duration": 0.5, "isWork": true },
+            "col4": { "desc": "准备新轮胎", "duration": 0.5, "isWork": true }
+          }
+        },
+        {
+          "time": 1.5,
+          "cells": {
+            "col1": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col2": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col3": { "desc": "卸下旧轮胎", "duration": 0.5, "isWork": true },
+            "col4": { "desc": "递送新轮胎", "duration": 0.5, "isWork": true }
+          }
+        },
+        {
+          "time": 2.0,
+          "cells": {
+            "col1": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col2": { "desc": "保持顶升", "duration": 0.5, "isWork": true },
+            "col3": { "desc": "安装新轮胎", "duration": 0.5, "isWork": true },
+            "col4": { "desc": "搬走旧轮胎", "duration": 0.5, "isWork": true }
+          }
+        },
+        {
+          "time": 2.5,
+          "cells": {
+            "col1": { "desc": "放下前部", "duration": 0.5, "isWork": true },
+            "col2": { "desc": "放下后部", "duration": 0.5, "isWork": true },
+            "col3": { "desc": "拧紧螺母", "duration": 0.5, "isWork": true },
+            "col4": { "desc": "等待", "duration": 0.5, "isWork": false }
+          }
+        }
+      ]
+    },
+    "aiPrompt": "帮我画一个F1轮胎更换的联合作业分析图。4个操作者：前千斤顶操作员、后千斤顶操作员、轮胎枪手、轮胎搬运工。流程：0.5秒前后千斤顶顶起车身（枪手和搬运工等待），1秒枪手拧松螺母、搬运工准备新胎，1.5秒枪手卸旧胎、搬运工递新胎，2秒枪手装新胎、搬运工搬走旧胎，2.5秒千斤顶放下、枪手拧紧。"
+  }
+}

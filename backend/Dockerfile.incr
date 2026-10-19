@@ -1,0 +1,3 @@
+FROM zhihuitu-backend:incr-base
+COPY backend/app/api/v1/charts.py /app/backend/app/api/v1/charts.py
+COPY backend/app/services/excel_export.py /app/backend/app/services/excel_export.py

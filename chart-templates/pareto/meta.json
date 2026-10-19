@@ -1,0 +1,26 @@
+{
+  "id": "pareto",
+  "name": "帕累托图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "六西格玛",
+  "description": "识别关键少数因素，80/20 法则可视化",
+  "tags": ["帕累托", "六西格玛", "质量"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 10,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：帕累托图" },
+    "categories": { "type": "string-list", "label": "分类名称", "required": true, "placeholder": "如：设备故障, 人为失误, 材料缺陷" },
+    "values": { "type": "number-list", "label": "频次数据", "required": true, "placeholder": "如：92, 68, 41, 27, 15" }
+  },
+  "example": {
+    "description": "下面是一个分析'产品缺陷原因'的帕累托图示例。按频次从高到低排列各缺陷类型，柱状图显示频次，折线显示累计百分比，红色虚线标识 80% 分界线。",
+    "data": {
+      "categories": ["外观划伤", "尺寸超差", "焊接不良", "装配松动", "漏检", "标签错误"],
+      "values": [92, 68, 41, 27, 15, 8]
+    },
+    "aiPrompt": "帮我画一个产品缺陷原因的帕累托图。缺陷类型和对应频次为：外观划伤 92 次、尺寸超差 68 次、焊接不良 41 次、装配松动 27 次、漏检 15 次、标签错误 8 次。"
+  }
+}

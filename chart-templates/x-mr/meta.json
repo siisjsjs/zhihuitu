@@ -1,0 +1,24 @@
+{
+  "id": "x-mr",
+  "name": "I-MR 控制图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "质量控制图",
+  "description": "单值-移动极差控制图，单件测量过程监控",
+  "tags": ["I-MR", "控制图", "质量控制"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 16,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：I-MR 控制图" },
+    "values": { "type": "number-list", "label": "测量值", "required": true, "placeholder": "如：10.2, 9.8, 10.5, 10.1, 9.9, 10.3" }
+  },
+  "example": {
+    "description": "下面是一个监控'化学溶液浓度'的 I-MR 控制图示例。15 次测量数据，上图为个体值控制图，下图为移动极差控制图。",
+    "data": {
+      "values": [5.12, 5.08, 5.15, 5.10, 5.06, 5.14, 5.09, 5.11, 5.07, 5.13, 5.10, 5.16, 5.08, 5.12, 5.09]
+    },
+    "aiPrompt": "帮我画一个化学溶液浓度的 I-MR 控制图。15 次测量值为：5.12, 5.08, 5.15, 5.10, 5.06, 5.14, 5.09, 5.11, 5.07, 5.13, 5.10, 5.16, 5.08, 5.12, 5.09。"
+  }
+}

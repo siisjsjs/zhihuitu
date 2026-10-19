@@ -1,0 +1,24 @@
+{
+  "id": "reliability",
+  "name": "可靠性分析",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "可靠性分析",
+  "description": "单组件可靠性分析，失效时间分布与统计分析",
+  "tags": ["可靠性", "失效分析", "寿命"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 30,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：轴承失效时间分析" },
+    "failure_times": { "type": "number-list", "label": "失效时间数据", "required": true, "placeholder": "如：120, 150, 180, 200, 95, 170" }
+  },
+  "example": {
+    "description": "一批轴承的失效时间数据（小时）：120、150、180、200、95、170、160、140、130、185、195、110、175、165、155。分析其可靠性分布。",
+    "data": {
+      "failure_times": [120, 150, 180, 200, 95, 170, 160, 140, 130, 185, 195, 110, 175, 165, 155]
+    },
+    "aiPrompt": "帮我做一个可靠性分析。轴承失效时间数据（小时）：120、150、180、200、95、170、160、140、130、185、195、110、175、165、155。"
+  }
+}

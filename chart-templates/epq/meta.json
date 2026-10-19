@@ -1,0 +1,25 @@
+{
+  "id": "epq",
+  "name": "经济生产批量模型",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "库存管理",
+  "description": "经济生产批量 EPQ 模型，优化生产批量决策",
+  "tags": ["EPQ", "库存管理", "生产批量"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 21,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：EPQ 库存水平图" },
+    "D": { "type": "number", "label": "年需求量 D", "required": true, "placeholder": "如：200" },
+    "P": { "type": "number", "label": "生产率 P", "required": true, "placeholder": "如：1000" },
+    "K": { "type": "number", "label": "生产准备成本 K", "required": true, "placeholder": "如：100" },
+    "H": { "type": "number", "label": "单位持有成本 H", "required": true, "placeholder": "如：5" }
+  },
+  "example": {
+    "description": "某产品年需求量 200 件，年生产率 1000 件，每次生产准备成本 100 元，单位年持有成本 5 元。求最优生产批量及库存变化。",
+    "data": { "D": 200, "P": 1000, "K": 100, "H": 5 },
+    "aiPrompt": "帮我做一个 EPQ 经济生产批量分析。年需求量 200 件，年生产率 1000 件，每次生产准备成本 100 元，单位年持有成本 5 元。"
+  }
+}

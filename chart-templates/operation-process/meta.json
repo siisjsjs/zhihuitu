@@ -1,0 +1,122 @@
+{
+  "id": "operation-process",
+  "name": "工艺程序图",
+  "engine": "drawio",
+  "category": "方法研究",
+  "description": "结构化录入 ○加工 □检验，一键生成 Draw.io 画布（版式贴近 IE 工艺程序图），可在画布内继续徒手编辑",
+  "tags": ["工艺程序图", "方法研究", "IE", "draw.io"],
+  "exportFormats": ["png", "svg", "xml"],
+  "supportAI": true,
+  "sortOrder": 6,
+  "version": "1.0.0",
+  "dataEntryComponent": "OperationProcessForm.vue",
+  "paramSchema": {
+    "header": {
+      "type": "object",
+      "label": "表头信息",
+      "required": true,
+      "fields": {
+        "productName": { "type": "string", "label": "制品名称", "required": true },
+        "department": { "type": "string", "label": "工作部门" },
+        "researcher": { "type": "string", "label": "研究者" },
+        "date": { "type": "string", "label": "日期，如 2025.3.3-2025.3.6" }
+      }
+    },
+    "summaryRows": {
+      "type": "array",
+      "label": "汇总统计表各行（一般为 加工/检验 两行；缺省时按 mainSteps 自动统计）",
+      "items": {
+        "type": "object",
+        "fields": {
+          "label": { "type": "string", "label": "内容列，如 加工、检验", "required": true },
+          "count": { "type": "number", "label": "次数", "required": true },
+          "time": { "type": "number", "label": "总时间（分钟）", "required": true }
+        }
+      }
+    },
+    "mainTitle": { "type": "string", "label": "主工艺线标题，如 整经准备", "required": true },
+    "mainMaterialLine": { "type": "string", "label": "主线顶部材料线文字，如 —整经纱线原料—" },
+    "mainSteps": {
+      "type": "array",
+      "label": "主工艺线步骤（自上而下）",
+      "required": true,
+      "items": {
+        "type": "object",
+        "fields": {
+          "kind": { "type": "string", "label": "步骤类型：operation=○加工，inspection=□检验", "required": true, "enum": ["operation", "inspection"] },
+          "badge": { "type": "string", "label": "符号内编号（可与顺序不一致），如 \"1\"、\"10\"", "required": true },
+          "timeMin": { "type": "number", "label": "该步骤时间（分钟），标在符号左侧", "required": true },
+          "label": { "type": "string", "label": "步骤名称，标在符号右侧", "required": true }
+        }
+      }
+    },
+    "branches": {
+      "type": "array",
+      "label": "左侧分支线（可为空数组）；分支自上而下排列后水平汇入主线",
+      "items": {
+        "type": "object",
+        "fields": {
+          "title": { "type": "string", "label": "分支标题，如 花梳准备", "required": true },
+          "materialLine": { "type": "string", "label": "分支顶部材料线文字，如 —花梳纱线原料—" },
+          "steps": { "type": "array", "label": "分支步骤，元素结构与 mainSteps 的步骤完全一致", "required": true },
+          "mergeLabel": { "type": "string", "label": "汇入水平线上的标注文字，如 —花梳完成—" },
+          "mergeAfterMainIndex": { "type": "number", "label": "汇入位置：在主线第 mergeAfterMainIndex 步（0 起算）与下一步之间汇入", "required": true },
+          "column": { "type": "string", "label": "分支排在主线左侧哪一列", "required": true, "enum": ["left", "middle"] }
+        }
+      }
+    }
+  },
+  "defaultDiagramXml": "<mxfile host=\"embed.diagrams.net\"><diagram id=\"blank\" name=\"Page-1\"><mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>",
+  "example": {
+    "description": "与附图一致的整经产线示例：左花梳、中纱架汇入右侧整经主干；汇总表与序号、时间、说明均可在表单中修改后再生成 Draw.io。",
+    "aiPrompt": "帮我生成一张工艺程序图（制品 S08451A18H，部门生产部，日期 2025.3.3-2025.3.6）。主干标题「整经准备」，原料「—整经纱线原料—」。主干从上往下：①加工156min整经换模；②检验126min整经开机维护；③加工45min拉盘头；④加工33min下轴；⑤加工69min上轴；⑥加工76min穿纱；⑦加工35min调机（序号标10）；⑧检验3580min经编开机维护（序号标2）。汇总：加工10次共547min，检验2次共3706min。两条分支都在「上轴」与「穿纱」之间汇入：左列「花梳准备」，原料「—花梳纱线原料—」，步骤⑧加工17min花梳换纱、⑨加工19min花梳穿纱，汇入标注「—花梳完成—」。中列「纱架准备」，原料「—纱架纱线原料—」，步骤⑥加工47min纱架换纱、⑦加工50min纱架穿纱，汇入标注「—纱架完成—」。",
+    "data": {
+      "header": {
+        "productName": "S08451A18H",
+        "department": "生产部",
+        "researcher": "",
+        "date": "2025.3.3-2025.3.6"
+      },
+      "summaryRows": [
+        { "label": "加工", "count": 10, "time": 547 },
+        { "label": "检验", "count": 2, "time": 3706 }
+      ],
+      "mainTitle": "整经准备",
+      "mainMaterialLine": "—整经纱线原料—",
+      "mainSteps": [
+        { "kind": "operation", "badge": "1", "timeMin": 156, "label": "整经换模" },
+        { "kind": "inspection", "badge": "1", "timeMin": 126, "label": "整经开机维护" },
+        { "kind": "operation", "badge": "2", "timeMin": 45, "label": "拉盘头" },
+        { "kind": "operation", "badge": "3", "timeMin": 33, "label": "下轴" },
+        { "kind": "operation", "badge": "4", "timeMin": 69, "label": "上轴" },
+        { "kind": "operation", "badge": "5", "timeMin": 76, "label": "穿纱" },
+        { "kind": "operation", "badge": "10", "timeMin": 35, "label": "调机" },
+        { "kind": "inspection", "badge": "2", "timeMin": 3580, "label": "经编开机维护" }
+      ],
+      "branches": [
+        {
+          "title": "花梳准备",
+          "materialLine": "—花梳纱线原料—",
+          "steps": [
+            { "kind": "operation", "badge": "8", "timeMin": 17, "label": "花梳换纱" },
+            { "kind": "operation", "badge": "9", "timeMin": 19, "label": "花梳穿纱" }
+          ],
+          "mergeLabel": "—花梳完成—",
+          "mergeAfterMainIndex": 4,
+          "column": "left"
+        },
+        {
+          "title": "纱架准备",
+          "materialLine": "—纱架纱线原料—",
+          "steps": [
+            { "kind": "operation", "badge": "6", "timeMin": 47, "label": "纱架换纱" },
+            { "kind": "operation", "badge": "7", "timeMin": 50, "label": "纱架穿纱" }
+          ],
+          "mergeLabel": "—纱架完成—",
+          "mergeAfterMainIndex": 4,
+          "column": "middle"
+        }
+      ]
+    }
+  }
+}

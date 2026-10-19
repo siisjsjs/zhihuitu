@@ -1,0 +1,28 @@
+{
+  "id": "dpmo",
+  "name": "DPMO 控制图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "质量控制图",
+  "description": "百万机会缺陷数控制图，六西格玛质量度量",
+  "tags": ["DPMO", "六西格玛", "控制图"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 20,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：DPMO 控制图" },
+    "defects_found": { "type": "number-list", "label": "各批次缺陷数", "required": true, "placeholder": "如：3, 2, 5, 1, 4" },
+    "sample_size": { "type": "number", "label": "样本量", "required": true, "placeholder": "如：100" },
+    "opportunities": { "type": "number", "label": "每单位缺陷机会数", "required": true, "placeholder": "如：10" }
+  },
+  "example": {
+    "description": "下面是一个监控'SMT 贴片焊接 DPMO'的控制图示例。12 批次数据，每批 200 片 PCB，每片有 50 个焊点（缺陷机会），记录每批发现的缺陷数。",
+    "data": {
+      "defects_found": [8, 5, 12, 3, 7, 6, 10, 4, 9, 5, 11, 6],
+      "sample_size": 200,
+      "opportunities": 50
+    },
+    "aiPrompt": "帮我画一个 SMT 贴片焊接的 DPMO 控制图。12 批次，每批 200 片 PCB，每片 50 个焊点。各批次缺陷数为：8, 5, 12, 3, 7, 6, 10, 4, 9, 5, 11, 6。"
+  }
+}

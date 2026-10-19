@@ -1,0 +1,44 @@
+{
+  "id": "line-chart",
+  "name": "折线图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "展示一个或多个指标随时间或序列变化的趋势",
+  "tags": ["折线图", "趋势", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 7,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：月度销售趋势" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：月份" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：销售额（万元）" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：指标" },
+    "source": { "type": "string", "label": "数据来源", "required": false, "placeholder": "如：数据来源：销售系统" },
+    "x_values": { "type": "number-list", "label": "横轴数据", "required": true, "placeholder": "如：1, 2, 3, 4" },
+    "series_names": { "type": "string-list", "label": "折线系列", "required": true, "placeholder": "如：销售额, 利润" },
+    "values": { "type": "matrix", "label": "系列数据矩阵", "required": true, "rowsFrom": "x_values", "colsFrom": "series_names" }
+  },
+  "example": {
+    "description": "下面是一个分析'上半年销售额和利润趋势'的折线图示例。",
+    "data": {
+      "title": "上半年销售额与利润趋势",
+      "x_label": "月份",
+      "y_label": "金额（万元）",
+      "legend_title": "指标",
+      "source": "数据来源：销售系统",
+      "x_values": [1, 2, 3, 4, 5, 6],
+      "series_names": ["销售额", "利润"],
+      "values": [
+        [82, 18],
+        [96, 22],
+        [105, 25],
+        [118, 28],
+        [126, 31],
+        [139, 35]
+      ]
+    },
+    "aiPrompt": "帮我画一个上半年销售额与利润趋势折线图。月份为 1 到 6 月；销售额为 82, 96, 105, 118, 126, 139 万元；利润为 18, 22, 25, 28, 31, 35 万元。"
+  }
+}

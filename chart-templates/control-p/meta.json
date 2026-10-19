@@ -1,0 +1,26 @@
+{
+  "id": "control-p",
+  "name": "p 控制图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "质量控制图",
+  "description": "不合格品率控制图，监控比例类质量波动",
+  "tags": ["p图", "控制图", "质量控制"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 17,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：p 控制图" },
+    "defects": { "type": "number-list", "label": "不合格品数", "required": true, "placeholder": "如：2, 1, 3, 2, 4" },
+    "group_size": { "type": "number-list", "label": "样本量", "required": true, "placeholder": "如：50, 50, 50, 50, 50" }
+  },
+  "example": {
+    "description": "下面是一个监控'PCB 板焊接不良率'的 p 控制图示例。12 批次检验数据，每批抽检 100 片，记录不合格品数。",
+    "data": {
+      "defects": [3, 2, 5, 1, 4, 2, 3, 6, 2, 4, 1, 3],
+      "group_size": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+    },
+    "aiPrompt": "帮我画一个 PCB 板焊接不良率的 p 控制图。12 批次检验，每批 100 片，不合格品数分别为：3, 2, 5, 1, 4, 2, 3, 6, 2, 4, 1, 3。"
+  }
+}

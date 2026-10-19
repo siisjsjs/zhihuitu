@@ -1,0 +1,57 @@
+{
+  "id": "therblig",
+  "name": "动素分析图",
+  "engine": "vue-component",
+  "component": "TherbligChart.vue",
+  "category": "方法研究",
+  "description": "将操作分解为基本动素（Therblig），分析动作效率",
+  "tags": ["动素分析", "动作研究", "IE"],
+  "exportFormats": ["xlsx", "png"],
+  "supportAI": true,
+  "sortOrder": 3,
+  "version": "1.0.0",
+  "dataSchema": {
+    "steps": {
+      "type": "array",
+      "label": "动素步骤",
+      "item": {
+        "elementWork": { "type": "string", "label": "要素作业" },
+        "leftAction": { "type": "string", "label": "左手动作" },
+        "leftTherblig": { "type": "string", "label": "左手动素代号" },
+        "eyeTherblig": { "type": "string", "label": "眼动素代号" },
+        "rightTherblig": { "type": "string", "label": "右手动素代号" },
+        "rightAction": { "type": "string", "label": "右手动作" },
+        "improvement": { "type": "string", "label": "改善点" }
+      }
+    }
+  },
+  "paramSchema": {
+    "steps": {
+      "type": "array",
+      "label": "动素步骤（按操作时序逐行给出，每行表示同一时刻左右手/眼的动作分解）",
+      "required": true,
+      "item": {
+        "elementWork": { "type": "string", "label": "要素作业名称。同一要素作业只在该组第一行填写，后续行填空字符串（图中会自动合并显示）", "required": false },
+        "leftAction": { "type": "string", "label": "左手动作描述（如：伸手向装配体）", "required": false },
+        "leftTherblig": { "type": "string", "label": "左手动素代号，无动作填空字符串", "required": false, "enum": ["TE", "G", "TL", "P", "DA", "U", "A", "RL", "I", "Sh", "F", "St", "Pn", "PP", "H", "AD", "UD", "R"], "enumLabels": { "TE": "伸手（第一类·有效）", "G": "握取（第一类·有效）", "TL": "移物（第一类·有效）", "P": "定位（第一类·有效）", "DA": "拆卸（第一类·有效）", "U": "使用（第一类·有效）", "A": "装配（第一类·有效）", "RL": "放开（第一类·有效）", "I": "检查（第一类·有效）", "Sh": "寻找（第二类·辅助）", "F": "发现（第二类·辅助）", "St": "选择（第二类·辅助）", "Pn": "思考（第二类·辅助）", "PP": "预定位（第二类·辅助）", "H": "持住（第三类·无效）", "AD": "可避免延迟（第三类·无效）", "UD": "不可避免延迟（第三类·无效）", "R": "休息（第三类·无效）" } },
+        "eyeTherblig": { "type": "string", "label": "眼动素代号（同 leftTherblig 枚举，常用 Sh 寻找 / F 发现 / I 检查），无则填空字符串", "required": false },
+        "rightTherblig": { "type": "string", "label": "右手动素代号（同 leftTherblig 枚举），无动作填空字符串", "required": false },
+        "rightAction": { "type": "string", "label": "右手动作描述（如：握取短螺栓）", "required": false },
+        "improvement": { "type": "string", "label": "改善点建议（针对 H/AD/UD/R 等无效动素给出改善方向），无则填空字符串", "required": false }
+      }
+    }
+  },
+  "example": {
+    "description": "下面是一个登高平台组装作业的动素分析示例。展示左右手的动素分解，包括伸手、握取、移物、定位、装配、持住等基本动素。",
+    "data": {
+      "steps": [
+        { "elementWork": "组装登高平台", "leftAction": "定位装配体", "leftTherblig": "P", "eyeTherblig": "", "rightTherblig": "P", "rightAction": "定位短螺栓", "improvement": "" },
+        { "elementWork": "", "leftAction": "伸手向装配体", "leftTherblig": "TE", "eyeTherblig": "", "rightTherblig": "TE", "rightAction": "伸手向短螺栓", "improvement": "" },
+        { "elementWork": "", "leftAction": "握取装配体", "leftTherblig": "G", "eyeTherblig": "", "rightTherblig": "G", "rightAction": "握取短螺栓", "improvement": "" },
+        { "elementWork": "", "leftAction": "移物装配体", "leftTherblig": "TL", "eyeTherblig": "", "rightTherblig": "TL", "rightAction": "移物短螺栓", "improvement": "" },
+        { "elementWork": "", "leftAction": "等待（持握装配体）", "leftTherblig": "H", "eyeTherblig": "", "rightTherblig": "A", "rightAction": "将短螺栓装配入短三孔折板", "improvement": "" }
+      ]
+    },
+    "aiPrompt": "帮我画一个登高平台组装作业的动素分析图。流程是：左手定位装配体，右手定位短螺栓；然后双手分别伸手、握取、移物；最后左手持握装配体等待，右手将短螺栓装配入短三孔折板。"
+  }
+}

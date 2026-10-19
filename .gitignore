@@ -1,0 +1,19 @@
+# dependencies / build output
+node_modules/
+dist/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# runtime data & secrets
+.env
+*.db
+*.db.bak-*
+backend/uploads/
+backend/templates/
+*.log
+*.tar
+*.zip
+
+# IDE
+.vscode/

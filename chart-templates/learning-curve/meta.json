@@ -1,0 +1,28 @@
+{
+  "id": "learning-curve",
+  "name": "学习曲线",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "生产管理",
+  "description": "基于幂律模型的学习曲线分析，预测重复作业工时递减趋势",
+  "tags": ["学习曲线", "作业测定", "生产管理"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 26,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：焊接工序学习曲线" },
+    "repeat_counts": { "type": "number-list", "label": "重复次数", "required": true, "placeholder": "如：1, 2, 3" },
+    "work_times": { "type": "number-list", "label": "对应工时", "required": true, "placeholder": "如：531.84, 498.6, 453.5" },
+    "predict_n": { "type": "number", "label": "预测次数", "required": false, "default": 5, "placeholder": "如：10" }
+  },
+  "example": {
+    "description": "某焊接工序的学习曲线数据：第 1 次用时 531.84 秒，第 2 次 498.6 秒，第 3 次 453.5 秒。预测到第 10 次的工时变化。",
+    "data": {
+      "repeat_counts": [1, 2, 3],
+      "work_times": [531.84, 498.6, 453.5],
+      "predict_n": 10
+    },
+    "aiPrompt": "帮我做一个学习曲线分析。焊接工序数据：第 1 次 531.84 秒，第 2 次 498.6 秒，第 3 次 453.5 秒，预测到第 10 次。"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "capability",
+  "name": "过程能力分析",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "六西格玛",
+  "description": "评估过程能力指数 Cp/Cpk，判断过程是否满足规格要求",
+  "tags": ["过程能力", "Cp", "Cpk", "六西格玛"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 13,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：过程能力分析" },
+    "data": { "type": "number-list", "label": "测量数据", "required": true, "placeholder": "如：4.1, 5.0, 5.2, 4.8, 5.4, 4.9" },
+    "LSL": { "type": "number", "label": "规格下限 LSL", "required": true },
+    "USL": { "type": "number", "label": "规格上限 USL", "required": true },
+    "target": { "type": "number", "label": "目标值", "required": false, "placeholder": "默认取 LSL 和 USL 中间值" }
+  },
+  "example": {
+    "description": "下面是一个分析'轴承外径加工尺寸'过程能力的示例。30 组测量数据，规格下限 49.95mm，规格上限 50.05mm，目标值 50.00mm。图中展示数据直方图、拟合正态曲线和规格限标线，并计算 Cp/Cpk。",
+    "data": {
+      "data": [50.01, 49.98, 50.03, 50.00, 49.97, 50.02, 49.99, 50.01, 50.00, 49.98, 50.04, 49.96, 50.02, 50.01, 49.99, 50.00, 49.97, 50.03, 50.01, 49.98, 50.02, 49.99, 50.00, 50.01, 49.97, 50.03, 49.98, 50.02, 50.00, 49.99],
+      "LSL": 49.95,
+      "USL": 50.05,
+      "target": 50.00
+    },
+    "aiPrompt": "帮我做一个轴承外径加工尺寸的过程能力分析。规格下限 49.95mm，规格上限 50.05mm，目标值 50.00mm。测量数据为：50.01, 49.98, 50.03, 50.00, 49.97, 50.02, 49.99, 50.01, 50.00, 49.98, 50.04, 49.96, 50.02, 50.01, 49.99, 50.00, 49.97, 50.03, 50.01, 49.98, 50.02, 49.99, 50.00, 50.01, 49.97, 50.03, 49.98, 50.02, 50.00, 49.99。"
+  }
+}

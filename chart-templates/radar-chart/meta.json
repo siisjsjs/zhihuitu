@@ -1,0 +1,37 @@
+{
+  "id": "radar-chart",
+  "name": "雷达图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "对比多个对象在多维能力、指标或评分上的综合表现",
+  "tags": ["雷达图", "多维评价", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 9,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：候选人多维度能力评估雷达图" },
+    "legend_title": { "type": "string", "label": "图例标题", "required": false, "placeholder": "如：候选人 ID" },
+    "dimensions": { "type": "string-list", "label": "评价维度", "required": true, "placeholder": "如：沟通能力, 专业能力, 管理能力" },
+    "series_names": { "type": "string-list", "label": "评价对象", "required": true, "placeholder": "如：C001, C002, C003" },
+    "values": { "type": "matrix", "label": "评分矩阵", "required": true, "rowsFrom": "series_names", "colsFrom": "dimensions" },
+    "max_score": { "type": "number", "label": "满分值", "required": false, "default": 10, "placeholder": "如：10" }
+  },
+  "example": {
+    "description": "下面是一个分析'候选人多维度能力评估'的雷达图示例。3 位候选人分别在沟通能力、专业能力、管理能力、创新能力、抗压能力、学习能力 6 个维度上评分。",
+    "data": {
+      "title": "候选人多维度能力评估雷达图",
+      "legend_title": "候选人 ID",
+      "dimensions": ["沟通能力", "专业能力", "管理能力", "创新能力", "抗压能力", "学习能力"],
+      "series_names": ["C001", "C002", "C003"],
+      "values": [
+        [8, 9, 6, 7, 7, 8],
+        [8, 7, 9, 6, 9, 7],
+        [7, 8, 6, 9, 7, 9]
+      ],
+      "max_score": 10
+    },
+    "aiPrompt": "帮我画一个候选人多维度能力评估雷达图。评价维度为沟通能力、专业能力、管理能力、创新能力、抗压能力、学习能力；候选人 C001 评分为 8, 9, 6, 7, 7, 8；C002 为 8, 7, 9, 6, 9, 7；C003 为 7, 8, 6, 9, 7, 9。满分为 10 分。"
+  }
+}

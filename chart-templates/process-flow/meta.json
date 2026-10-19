@@ -1,0 +1,91 @@
+{
+  "id": "process-flow",
+  "name": "流程程序图",
+  "engine": "vue-component",
+  "component": "ProcessFlow.vue",
+  "category": "方法研究",
+  "description": "分析工作流程中操作、检查、搬运、等待、储存各环节的时间与距离",
+  "tags": ["流程分析", "方法研究", "IE"],
+  "exportFormats": ["xlsx", "png"],
+  "supportAI": true,
+  "sortOrder": 1,
+  "version": "1.0.0",
+  "dataSchema": {
+    "headerInfo": {
+      "workName": { "type": "string", "label": "作业名称" },
+      "start": { "type": "string", "label": "开始状态" },
+      "end": { "type": "string", "label": "结束状态" },
+      "researcher": { "type": "string", "label": "研究者" },
+      "reviewer": { "type": "string", "label": "审核者" },
+      "date": { "type": "date", "label": "日期" },
+      "version": { "type": "enum", "label": "版本", "options": ["现行", "改善"] }
+    },
+    "steps": {
+      "type": "array",
+      "label": "流程步骤",
+      "item": {
+        "content": { "type": "string", "label": "步骤内容" },
+        "time": { "type": "number", "label": "时间(秒)" },
+        "distance": { "type": "number", "label": "距离(米)" },
+        "symbol": { "type": "enum", "label": "类型", "options": ["processing", "inspection", "transport", "waiting", "storage"] },
+        "remarks": { "type": "string", "label": "备注" }
+      }
+    }
+  },
+  "paramSchema": {
+    "headerInfo": {
+      "type": "object",
+      "label": "表头基本信息",
+      "required": false,
+      "fields": {
+        "workName": { "type": "string", "label": "工作/作业名称", "required": false },
+        "start": { "type": "string", "label": "开始状态或开始时间（如 08:00 或 原料库）", "required": false },
+        "end": { "type": "string", "label": "结束状态或结束时间（如 12:00 或 成品库）", "required": false },
+        "researcher": { "type": "string", "label": "研究者姓名", "required": false },
+        "reviewer": { "type": "string", "label": "审阅者姓名", "required": false },
+        "date": { "type": "string", "label": "日期，格式 YYYY-MM-DD", "required": false },
+        "version": { "type": "string", "label": "版本", "required": false, "enum": ["现行", "改善"] }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "label": "流程步骤（严格按工艺先后顺序排列，相邻步骤符号会用红色折线连接）",
+      "required": true,
+      "item": {
+        "content": { "type": "string", "label": "步骤内容/工作说明（如：搬运至切割机）", "required": true },
+        "time": { "type": "number", "label": "该步骤耗时（秒），无耗时填 0", "required": false },
+        "distance": { "type": "number", "label": "移动距离（米），通常仅搬运类步骤有距离，其余填 0", "required": false },
+        "symbol": { "type": "string", "label": "工序类型", "required": true, "enum": ["processing", "inspection", "transport", "waiting", "storage"], "enumLabels": { "processing": "操作/加工 ○", "inspection": "检查/检验 □", "transport": "搬运 →", "waiting": "等待 D", "storage": "储存 ▽" } },
+        "remarks": { "type": "string", "label": "备注，无则填空字符串", "required": false }
+      }
+    }
+  },
+  "example": {
+    "description": "下面是一个零件加工的流程程序图示例。包含从原料储存到成品入库的 11 个工序步骤,涵盖储存、搬运、等待、操作、检查五种类型,完整展示工序系列的连线和统计。",
+    "data": {
+      "headerInfo": {
+        "workName": "零件加工流程",
+        "start": "08:00",
+        "end": "12:00",
+        "researcher": "张三",
+        "reviewer": "李四",
+        "date": "2024-03-20",
+        "version": "现行"
+      },
+      "steps": [
+        { "content": "原料储存", "distance": 0, "time": 0, "symbol": "storage", "remarks": "" },
+        { "content": "搬运至切割机", "distance": 20, "time": 300, "symbol": "transport", "remarks": "" },
+        { "content": "等待切割", "distance": 0, "time": 600, "symbol": "waiting", "remarks": "" },
+        { "content": "切割下料", "distance": 0, "time": 900, "symbol": "processing", "remarks": "" },
+        { "content": "尺寸检查", "distance": 0, "time": 120, "symbol": "inspection", "remarks": "" },
+        { "content": "搬运至钻床", "distance": 15, "time": 240, "symbol": "transport", "remarks": "" },
+        { "content": "钻孔", "distance": 0, "time": 480, "symbol": "processing", "remarks": "" },
+        { "content": "去毛刺", "distance": 0, "time": 300, "symbol": "processing", "remarks": "" },
+        { "content": "最终检查", "distance": 0, "time": 180, "symbol": "inspection", "remarks": "" },
+        { "content": "搬运至成品库", "distance": 30, "time": 360, "symbol": "transport", "remarks": "" },
+        { "content": "成品储存", "distance": 0, "time": 0, "symbol": "storage", "remarks": "" }
+      ]
+    },
+    "aiPrompt": "帮我画一个零件加工的流程程序图。从原料仓库出发,先搬运 20 米到切割机,等待切割 10 分钟后切割下料 15 分钟,然后尺寸检查 2 分钟,搬运 15 米到钻床钻孔 8 分钟,去毛刺 5 分钟,最终检查 3 分钟,最后搬运 30 米到成品仓库存储。"
+  }
+}

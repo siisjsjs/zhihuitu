@@ -1,0 +1,33 @@
+{
+  "id": "bar-chart",
+  "name": "柱状图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "对比不同分类的数值大小，适合排行、销量、成本等场景",
+  "tags": ["柱状图", "对比", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 6,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：各渠道销售额对比" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：销售渠道" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：销售额（万元）" },
+    "categories": { "type": "string-list", "label": "分类名称", "required": true, "placeholder": "如：线上商城, 门店, 经销商" },
+    "values": { "type": "number-list", "label": "分类数值", "required": true, "placeholder": "如：128, 96, 72" },
+    "show_value_labels": { "type": "number", "label": "显示数值标签", "required": false, "default": 1, "placeholder": "1 显示，0 不显示" }
+  },
+  "example": {
+    "description": "下面是一个分析'各销售渠道季度销售额'的柱状图示例。",
+    "data": {
+      "title": "各销售渠道季度销售额对比",
+      "x_label": "销售渠道",
+      "y_label": "销售额（万元）",
+      "categories": ["线上商城", "直营门店", "经销商", "企业客户", "直播渠道"],
+      "values": [128, 96, 72, 110, 86],
+      "show_value_labels": 1
+    },
+    "aiPrompt": "帮我画一个各销售渠道季度销售额对比柱状图。销售渠道和销售额为：线上商城 128 万元、直营门店 96 万元、经销商 72 万元、企业客户 110 万元、直播渠道 86 万元。"
+  }
+}

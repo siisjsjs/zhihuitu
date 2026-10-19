@@ -1,0 +1,75 @@
+{
+  "id": "gantt",
+  "name": "甘特图",
+  "engine": "drawio",
+  "category": "生产管理",
+  "description": "按时间轴展示项目各阶段与任务的起止跨度，可视化项目计划与里程碑",
+  "tags": ["甘特图", "项目管理", "进度计划", "Gantt"],
+  "exportFormats": ["png", "svg", "xml"],
+  "supportAI": true,
+  "sortOrder": 7,
+  "version": "1.0.0",
+  "dataEntryComponent": "GanttChartForm.vue",
+  "defaultDiagramXml": "<mxfile host=\"embed.diagrams.net\"><diagram id=\"blank\" name=\"Page-1\"><mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>",
+  "example": {
+    "description": "一个 12 个月的项目实施里程碑甘特图，包含 6 个阶段共 28 个任务，从需求调研到总结复盘的完整项目周期。",
+    "aiPrompt": "帮我生成一张 12 个月实施里程碑甘特图。阶段一（1-2月）需求调研与原型设计，包含行业市场调研、竞品分析、项目立项、需求文档、交互原型设计。阶段二（3-4月）MVP核心功能开发，包含AI人物替换引擎、视频合成模块、AI配音、字幕生成、内部测试。阶段三（5-6月）平台功能扩展，包含批量模板引擎、素材库、协作权限、审核合规。阶段四（7-8月）客户试点，包含样板客户、定制部署、数据采集、定价测试。阶段五（9-10月）产品迭代与商业化，包含功能优化、SaaS改造、演示版搭建、企业方案。阶段六（11-12月）总结复盘，包含答辩PPT、案例包装、ROI分析、融资方案。",
+    "data": {
+      "title": "12个月实施里程碑",
+      "months": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+      "phases": [
+        {
+          "name": "阶段一：需求调研与原型设计",
+          "color": "#4472C4",
+          "startMonth": 1,
+          "duration": 2,
+          "tasks": [
+            { "name": "行业市场调研与用户访谈", "startMonth": 1, "duration": 1.5 },
+            { "name": "竞品分析与场景聚焦", "startMonth": 1.1, "duration": 1.4 },
+            { "name": "项目立项与团队组建", "startMonth": 1.5, "duration": 1.25 },
+            { "name": "需求文档与功能规划", "startMonth": 1.9, "duration": 1.1 },
+            { "name": "交互原型设计与评审", "startMonth": 2.15, "duration": 1.1 }
+          ]
+        },
+        {
+          "name": "阶段二：MVP核心功能开发",
+          "color": "#548235",
+          "startMonth": 3,
+          "duration": 2,
+          "tasks": [
+            { "name": "AI人物替换引擎开发", "startMonth": 3, "duration": 1.7 },
+            { "name": "固定景别视频合成模块", "startMonth": 3.2, "duration": 1.5 },
+            { "name": "AI配音与语音合成集成", "startMonth": 3.6, "duration": 1.3 },
+            { "name": "字幕自动生成与导出", "startMonth": 4, "duration": 1 },
+            { "name": "MVP内部测试与Bug修复", "startMonth": 4.3, "duration": 0.9 }
+          ]
+        }
+      ]
+    }
+  },
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": true },
+    "months": { "type": "string[]", "label": "时间轴月份刻度标签，如 [\"1月\",\"2月\",...,\"12月\"]；缺省时按条形跨度自动生成", "required": false },
+    "phases": {
+      "type": "object[]",
+      "label": "阶段列表（按时间顺序，自上而下绘制；阶段行加粗深色，任务行为同色淡化）",
+      "required": true,
+      "items": {
+        "name": { "type": "string", "label": "阶段名称", "required": true },
+        "color": { "type": "string", "label": "阶段主题色 hex，如 #4472C4；缺省自动配色", "required": false },
+        "startMonth": { "type": "number", "label": "阶段开始月份，1 表示第 1 个月开头，支持小数（如 1.5 表示月中）", "required": true },
+        "duration": { "type": "number", "label": "阶段持续月数，支持小数", "required": true },
+        "tasks": {
+          "type": "object[]",
+          "label": "阶段内任务列表",
+          "required": false,
+          "items": {
+            "name": { "type": "string", "label": "任务名称", "required": true },
+            "startMonth": { "type": "number", "label": "任务开始月份，1 起算，支持小数", "required": true },
+            "duration": { "type": "number", "label": "任务持续月数，支持小数", "required": true }
+          }
+        }
+      }
+    }
+  }
+}

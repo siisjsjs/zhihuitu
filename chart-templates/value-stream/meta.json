@@ -1,0 +1,133 @@
+{
+  "id": "value-stream",
+  "name": "价值流程图",
+  "engine": "drawio",
+  "category": "生产管理",
+  "description": "精益生产价值流程图（VSM），展示信息流、物料流与时间线三大区域，用于识别浪费、缩短交付周期、计算节拍时间与生产周期效率（PCE）",
+  "tags": ["价值流程图", "VSM", "精益生产", "价值流", "Value Stream Mapping"],
+  "exportFormats": ["png", "svg", "xml"],
+  "supportAI": true,
+  "sortOrder": 8,
+  "version": "1.0.0",
+  "dataEntryComponent": "ValueStreamForm.vue",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图标题，如 某装配线当前状态价值流程图", "required": true },
+    "customer": {
+      "type": "object",
+      "label": "客户（右上工厂图标）",
+      "required": true,
+      "fields": {
+        "name": { "type": "string", "label": "客户名称", "required": true },
+        "dailyDemand": { "type": "number", "label": "日需求量（件/天），节拍时间计算依据", "required": true },
+        "unit": { "type": "string", "label": "数量单位，默认 件" },
+        "deliveryFreq": { "type": "string", "label": "交付频次，如 每日1次" },
+        "infoLabel": { "type": "string", "label": "客户→生产控制信息流标签，如 月客户订单" }
+      }
+    },
+    "supplier": {
+      "type": "object",
+      "label": "供应商（左上工厂图标）",
+      "required": true,
+      "fields": {
+        "name": { "type": "string", "label": "供应商名称", "required": true },
+        "deliveryFreq": { "type": "string", "label": "送货频次，如 每周2次" },
+        "infoLabel": { "type": "string", "label": "生产控制→供应商信息流标签，如 月采购订单" }
+      }
+    },
+    "control": {
+      "type": "object",
+      "label": "生产控制（顶部中央方框）",
+      "fields": {
+        "name": { "type": "string", "label": "名称，默认 生产控制 / MRP" }
+      }
+    },
+    "processes": {
+      "type": "array",
+      "label": "工序列表（从左到右物料流）；用 next 描述后继可表达并联分叉再汇合",
+      "required": true,
+      "items": {
+        "type": "object",
+        "fields": {
+          "id": { "type": "string", "label": "工序唯一 id，如 p1、p2", "required": true },
+          "name": { "type": "string", "label": "工序名称", "required": true },
+          "cycleTime": { "type": "number", "label": "C/T 周期时间（秒/件）", "required": true },
+          "changeover": { "type": "number", "label": "C/O 换模时间（分钟）" },
+          "operators": { "type": "number", "label": "操作员人数" },
+          "uptime": { "type": "number", "label": "设备可用率（%）" },
+          "firstYield": { "type": "number", "label": "一次良品率（%）" },
+          "next": { "type": "array", "label": "后继工序 id 数组；空数组表示末工序；全部不填则按数组顺序线性串联" }
+        }
+      }
+    },
+    "inventories": {
+      "type": "array",
+      "label": "工序间库存三角 ▽",
+      "items": {
+        "type": "object",
+        "fields": {
+          "afterIndex": { "type": "number", "label": "位置：-1=供应商之后（首工序前），否则第 afterIndex 个工序（0 起算）之后", "required": true },
+          "qty": { "type": "number", "label": "平均库存量（件）", "required": true },
+          "days": { "type": "number", "label": "折算库存天数（天），计入时间线非增值段", "required": true },
+          "invType": { "type": "string", "label": "库存类型", "enum": ["inventory", "supermarket", "fifo"] }
+        }
+      }
+    },
+    "infoFlows": {
+      "type": "array",
+      "label": "生产控制→工序 的计划下达信息流箭头",
+      "items": {
+        "type": "object",
+        "fields": {
+          "toId": { "type": "string", "label": "目标工序 id（须与 processes 中的 id 对应）", "required": true },
+          "label": { "type": "string", "label": "箭头标签，如 周计划、日计划", "required": true }
+        }
+      }
+    },
+    "kaizens": {
+      "type": "array",
+      "label": "改善爆炸点（锯齿星形）",
+      "items": {
+        "type": "object",
+        "fields": {
+          "afterIndex": { "type": "number", "label": "位置：-1=供应商之后，否则第 afterIndex 个工序（0 起算）上方", "required": true },
+          "label": { "type": "string", "label": "改善点描述，如 换模时间过长", "required": true }
+        }
+      }
+    },
+    "workingTimePerDay": { "type": "number", "label": "有效工作时间（秒/天），用于节拍时间计算", "required": true },
+    "showTakt": { "type": "boolean", "label": "是否显示节拍时间框（节拍=workingTimePerDay/dailyDemand）" }
+  },
+  "defaultDiagramXml": "<mxfile host=\"embed.diagrams.net\"><diagram id=\"blank\" name=\"Page-1\"><mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>",
+  "example": {
+    "description": "某装配线当前状态价值流程图，含冲压/焊接/去毛边/装配 4 个工序（焊接与去毛边并联）、4 处库存、生产控制下达的 2 条生产计划与 2 处改善点，自动计算节拍时间与生产周期效率。",
+    "aiPrompt": "帮我生成一张某装配线当前状态价值流程图。客户日需求 265 件，每日发货 1 次，生产控制向客户下达月客户订单；钢材供应商每周送货 2 次，生产控制向供应商下达月采购订单；有效工作时间 27600 秒/天。工序依次为：冲压（C/T 2秒、C/O 120分、可用率 98%、良品率 96%、2人），之后焊接与去毛边可同时进行——焊接（C/T 39秒、C/O 20分、可用率 99%、良品率 90%、1人）、去毛边（C/T 17秒、C/O 0分、可用率 80%、良品率 100%、1人），两者再汇入装配（C/T 48秒、C/O 15分、可用率 100%、良品率 98%、2人）。库存：供应商后 2650 件约 10 天，冲压后 5300 件约 20 天，焊接后 1325 件约 5 天，去毛边后 1060 件约 4 天。生产控制向冲压下达周计划、向装配下达日计划。改善点：冲压处换模时间过长，去毛边处在制品积压。",
+    "data": {
+      "title": "某装配线当前状态价值流程图",
+      "customer": { "name": "客户", "dailyDemand": 265, "unit": "件", "deliveryFreq": "每日1次", "infoLabel": "月客户订单" },
+      "supplier": { "name": "钢材供应商", "deliveryFreq": "每周2次", "infoLabel": "月采购订单" },
+      "control": { "name": "生产控制 / MRP" },
+      "processes": [
+        { "id": "p1", "name": "冲压", "cycleTime": 2, "changeover": 120, "operators": 2, "uptime": 98, "firstYield": 96, "next": ["p2", "p3"] },
+        { "id": "p2", "name": "焊接", "cycleTime": 39, "changeover": 20, "operators": 1, "uptime": 99, "firstYield": 90, "next": ["p4"] },
+        { "id": "p3", "name": "去毛边", "cycleTime": 17, "changeover": 0, "operators": 1, "uptime": 80, "firstYield": 100, "next": ["p4"] },
+        { "id": "p4", "name": "装配", "cycleTime": 48, "changeover": 15, "operators": 2, "uptime": 100, "firstYield": 98, "next": [] }
+      ],
+      "inventories": [
+        { "afterIndex": -1, "qty": 2650, "days": 10, "invType": "inventory" },
+        { "afterIndex": 0, "qty": 5300, "days": 20, "invType": "inventory" },
+        { "afterIndex": 1, "qty": 1325, "days": 5, "invType": "inventory" },
+        { "afterIndex": 2, "qty": 1060, "days": 4, "invType": "inventory" }
+      ],
+      "infoFlows": [
+        { "toId": "p1", "label": "周计划" },
+        { "toId": "p4", "label": "日计划" }
+      ],
+      "kaizens": [
+        { "afterIndex": 0, "label": "换模时间过长" },
+        { "afterIndex": 2, "label": "在制品积压" }
+      ],
+      "workingTimePerDay": 27600,
+      "showTakt": true
+    }
+  }
+}

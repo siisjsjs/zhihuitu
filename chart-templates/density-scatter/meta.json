@@ -1,0 +1,58 @@
+{
+  "id": "density-scatter",
+  "name": "密度散点图",
+  "engine": "matplotlib",
+  "generator": "generator.py",
+  "category": "常用图表",
+  "description": "用二维密度和散点叠加展示大量样本的集中区域和分布关系",
+  "tags": ["密度散点图", "分布", "散点", "常用"],
+  "exportFormats": ["png", "pdf"],
+  "supportAI": true,
+  "sortOrder": 10,
+  "version": "1.0.0",
+  "paramSchema": {
+    "title": { "type": "string", "label": "图表标题", "required": false, "placeholder": "如：用户年龄与消费金额分布密度图" },
+    "x_label": { "type": "string", "label": "横轴名称", "required": false, "placeholder": "如：年龄" },
+    "y_label": { "type": "string", "label": "纵轴名称", "required": false, "placeholder": "如：消费金额（元）" },
+    "excel_import": {
+      "type": "excel",
+      "label": "导入 Excel 数据",
+      "required": false,
+      "help": "请上传包含“年龄”和“消费金额（元）”两列的 Excel 文件；可先下载顶部的 Excel 示例。",
+      "mappings": [
+        { "column": "年龄", "target": "x_values", "index": 0 },
+        { "column": "消费金额（元）", "target": "y_values", "index": 1 }
+      ]
+    },
+    "x_values": { "type": "hidden", "default": [] },
+    "y_values": { "type": "hidden", "default": [] },
+    "bins": { "type": "number", "label": "密度分箱数", "required": false, "default": 35, "placeholder": "建议 20-60" },
+    "point_alpha": { "type": "number", "label": "散点透明度", "required": false, "default": 0.12, "placeholder": "建议 0.05-0.2" }
+  },
+  "excelExample": {
+    "fileName": "密度散点图_Excel示例.xlsx",
+    "sheetName": "用户消费数据",
+    "columns": ["年龄", "消费金额（元）"],
+    "rows": [
+      [19, 980], [22, 1320], [24, 1680], [25, 2050], [27, 2180],
+      [29, 2560], [31, 2860], [33, 3340], [35, 3020], [36, 3180],
+      [38, 3560], [40, 2980], [42, 3820], [44, 3350], [45, 2760],
+      [46, 2440], [48, 2250], [50, 1980], [52, 1720], [54, 2360],
+      [56, 1480], [58, 2050], [60, 1680], [28, 0], [39, 4680],
+      [41, 4920], [30, 2650], [34, 3150], [37, 2890], [49, 2140]
+    ]
+  },
+  "example": {
+    "description": "下面是一个分析'用户年龄与消费金额分布密度'的示例。数据模拟了不同年龄段用户的消费金额分布，用密度颜色展示样本集中区域，并叠加低透明度散点。",
+    "data": {
+      "title": "用户年龄与消费金额分布密度图",
+      "x_label": "年龄",
+      "y_label": "消费金额（元）",
+      "x_values": [],
+      "y_values": [],
+      "bins": 35,
+      "point_alpha": 0.12
+    },
+    "aiPrompt": "帮我画一个用户年龄与消费金额分布密度图。横轴为年龄，纵轴为消费金额（元）。请提供 Excel（两列为年龄和消费金额）；若暂无可先留空 x_values/y_values，由系统自动用演示分布生成预览。"
+  }
+}
