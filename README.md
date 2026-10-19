@@ -54,8 +54,6 @@
 │   ├── Dockerfile
 │   └── .env.example
 ├── chart-templates/             图表模板（每个模板一个目录 + preview.png）
-├── deploy/nginx/default.conf    站点反向代理配置
-├── server-scripts/              运维/迁移辅助脚本
 ├── docker-compose.yml
 └── .dockerignore
 ```
